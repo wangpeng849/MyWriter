@@ -1,10 +1,14 @@
 package com.wangp.myaop.controller;
 
 import com.wangp.myaop.aop.Entity;
+import com.wangp.myaop.entity.TestEntity;
+import com.wangp.myaop.mapper.TestMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import net.bytebuddy.asm.Advice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +37,14 @@ public class MyController {
     @RequestMapping("/change/{id}")
     public String changeParam(@PathVariable String id){
         return id;
+    }
+
+
+    @Autowired
+    private TestMapper testMapper;
+    @RequestMapping("/testM")
+    public String testMapper(){
+        TestEntity aTest = testMapper.getATest();
+        return aTest.toString();
     }
 }
