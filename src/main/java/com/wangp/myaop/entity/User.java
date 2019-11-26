@@ -1,13 +1,19 @@
 package com.wangp.myaop.entity;
  
+import java.io.Serializable;
 import java.util.Date;
  
-public class User {
+public class User implements Serializable {
 	
 	private int id;
 	private String username;
 	private int age;
-	private Date ctm;
+	private String ctm;
+
+	public static User mixUser(User userValue, User userHash) {
+		return new User(userHash.getId()+userValue.getId(),userHash.getUsername()+userValue.getUsername(),userHash.getAge()+userValue.getAge(),userHash.getCtm()+userValue.getCtm());
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -26,13 +32,21 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public Date getCtm() {
+	public String getCtm() {
 		return ctm;
 	}
-	public void setCtm(Date ctm) {
+	public void setCtm(String ctm) {
 		this.ctm = ctm;
 	}
-	
-	
- 
+
+	public User() {
+
+	}
+
+	public User(int id, String username, int age, String ctm) {
+		this.id = id;
+		this.username = username;
+		this.age = age;
+		this.ctm = ctm;
+	}
 }
