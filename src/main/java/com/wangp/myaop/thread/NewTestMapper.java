@@ -11,12 +11,21 @@ import java.util.List;
  * @Date 2019/12/10
  */
 @Mapper
-public interface TestMapper {
+public interface NewTestMapper {
     @Select("select * from testvo")
     List<TestVo> test11();
 
     @Select("select * from testdo")
     List<TestDo> test12();
+
+    @Select("select * from testpo")
+    List<TestPo> test13();
+
+    @Select("select * from testjo")
+    List<TestJo> test14();
+
+    @Select("select * from testko")
+    List<TestKo> test15();
 
     @Insert("INSERT INTO `testdo` (`username`, `age`, `desc`) VALUES ('zzz', '2', 'asdasdasd')")
     int insert();
