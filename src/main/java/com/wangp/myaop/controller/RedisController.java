@@ -28,7 +28,7 @@ public class RedisController {
         String userStr = json.toString();
         User userjson = JSON.parseObject(userStr,User.class);
         System.out.println(userjson);
-        return "OK";
+            return "OK";
     }
  
     @RequestMapping(value = "/get")

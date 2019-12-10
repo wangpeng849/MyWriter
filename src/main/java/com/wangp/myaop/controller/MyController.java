@@ -7,11 +7,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 @RestController
 @Api("我的Controller")//@Api是用来描述类的
@@ -47,4 +50,33 @@ public class MyController {
         TestEntity aTest = testMapper.getATest();
         return aTest.toString();
     }
+
+    @PostMapping("/head")
+    public String head(HttpServletRequest request){
+        String test = request.getHeader("test");
+        return test;
+    }
+
+    @PostMapping("/heads")
+    public String heads(HttpServletRequest request){
+        Enumeration<String> test = request.getHeaders("test");
+        String bruce = "";
+        while(test.hasMoreElements()){
+           bruce+=test.nextElement();
+        }
+
+        return bruce;
+    }
+
+    @PostMapping("/headName")
+    public String headName(HttpServletRequest request){
+        Enumeration<String> headerNames = request.getHeaderNames();
+        String bruce = "";
+        while(headerNames.hasMoreElements()){
+            bruce+=headerNames.nextElement()  +  "\n";
+        }
+        return bruce;
+    }
+
+
 }
