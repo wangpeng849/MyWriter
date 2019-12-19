@@ -1,0 +1,57 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <title>test2</title>
+</head>
+
+<body>
+<span>你好：</span>
+<!-- 如果不支持这种th:的命名空间写法，那么可以把th:text换成 data-th-text，Thymeleaf也可以兼容。-->
+<span th:text="${user.name}">请跟我来</span>
+,这是你的兄弟,
+<span th:text="${user.friend.getName()}"></span>
+
+
+<span th:utext="${user.getAge()}"></span>
+
+
+<h2>
+    <p>Name: <span th:text="${user.name}">Jack</span>.</p>
+    <p>Age: <span th:text="${user.age}">21</span>.</p>
+    <p>friend: <span th:text="${user.friend.name}">Rose</span>.</p>
+</h2>
+
+
+<h3 th:object="${user}">
+    <p>Name: <span th:text="*{name}">Jack</span>.</p>
+    <p>Age: <span th:text="*{age}">21</span>.</p>
+    <p>friend: <span th:text="*{friend.name}">Rose</span>.</p>
+</h3>
+
+
+<!--  ognl表达式本身就支持方法调用，例如： -->
+
+<h2 th:object="${user}">
+    <p>FirstName: <span th:text="*{name.split(' ')[0]}">Jack</span>.</p>
+    <p>LastName: <span th:text="*{name.split(' ')[1]}">Li</span>.</p>
+</h2>
+
+<!--
+Thymeleaf中提供了一些内置对象，并且在这些对象中提供了一些方法，方便我们来调用。获取这些对象，需要使用#对象名来引用。
+
+一些环境相关对象
+
+对象	    作用
+#ctx	    获取Thymeleaf自己的Context对象
+#requset	如果是web程序，可以获取HttpServletRequest对象
+#response	如果是web程序，可以获取HttpServletReponse对象
+#session	如果是web程序，可以获取HttpSession对象
+#servletContext	如果是web程序，可以获取HttpServletContext对象
+-->
+<p>
+    今天是：<span th:text="${#dates.format(today,'yyyy-MM-dd HH:ss:mm')}">2019/12/19</span>
+</p>
+</body>
+</html>

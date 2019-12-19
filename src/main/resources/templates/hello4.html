@@ -1,0 +1,23 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <title>test4</title>
+</head>
+
+<body>
+<tr th:each="user,stat:${users}">
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.age}"></td>
+    <td th:text="${stat.index}"></td>
+</tr>
+
+<hr>
+<tr th:each="user:${users}">
+    <td th:if="${user.age > 23}">
+        <span th:text="|${user.name},是一个老油条!|"></span>
+    </td>
+</tr>
+
+</body>
+</html>

@@ -2,7 +2,9 @@ package com.wangp.myaop.entity;
  
 import java.io.Serializable;
 import java.util.Date;
- 
+
+
+
 public class User implements Serializable {
 	
 	private int id;

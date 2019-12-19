@@ -1,8 +1,7 @@
 package com.wangp.myaop.controller;
 
 import com.wangp.myaop.aop.Entity;
-import com.wangp.myaop.entity.TestEntity;
-import com.wangp.myaop.mapper.TestMapper;
+//import com.wangp.myaop.mapper.TestMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -43,13 +42,13 @@ public class MyController {
     }
 
 
-    @Autowired
-    private TestMapper testMapper;
-    @RequestMapping("/testM")
-    public String testMapper(){
-        TestEntity aTest = testMapper.getATest();
-        return aTest.toString();
-    }
+//    @Autowired
+//    private TestMapper testMapper;
+//    @RequestMapping("/testM")
+//    public String testMapper(){
+//        TestEntity aTest = testMapper.getATest();
+//        return aTest.toString();
+//    }
 
     @PostMapping("/head")
     public String head(HttpServletRequest request){
