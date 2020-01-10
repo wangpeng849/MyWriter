@@ -16,3 +16,5 @@ com.wangp.myaop.designpattern：复习设计模式
 com.wangp.myaop.socket：socket编程
 
 com.wangp.myaop.timetask：定时任务
+
+com.wangp.myaop.serializationobject：对象的序列化
