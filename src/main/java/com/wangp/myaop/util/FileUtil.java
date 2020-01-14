@@ -66,8 +66,8 @@ public class FileUtil {
     }
 
     public static void main(String[] args) {
-        File file = new File("E:\\test");
-//        deleteFileByNotContainsName(file, Arrays.asList("王鵬","王"));
+        File file = new File("C:\\Users\\wangp\\Desktop\\2019菁干班日报");
+        deleteFileByNotContainsName(file, Arrays.asList("week"));
         deleteBlankDirectory(file);
     }
 }
