@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Product {
-      @Autowired
-      private KafkaTemplate kafkaTemplate;
-
-      public void send(String name){
-            User u=new User();
-            u.setUsername(name);
-            u.setAge(11);
-            kafkaTemplate.send("hello", JSON.toJSONString(u));
-      }
+//      @Autowired
+//      private KafkaTemplate kafkaTemplate;
+//
+//      public void send(String name){
+//            User u=new User();
+//            u.setUsername(name);
+//            u.setAge(11);
+//            kafkaTemplate.send("hello", JSON.toJSONString(u));
+//      }
 }

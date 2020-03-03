@@ -18,12 +18,12 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 public class KafkaSender {
 
-    @Autowired
-    private KafkaTemplate kafkaTemplate;
+//    @Autowired
+//    private KafkaTemplate kafkaTemplate;
 
-    @KafkaListener(topics = {"hello"})
-    public void sendTest(){
-        kafkaTemplate.send("hello","hello,kafka" + LocalTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-
-    }
+//    @KafkaListener(topics = {"hello"})
+//    public void sendTest(){
+//        kafkaTemplate.send("hello","hello,kafka" + LocalTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
+//
+//    }
 }

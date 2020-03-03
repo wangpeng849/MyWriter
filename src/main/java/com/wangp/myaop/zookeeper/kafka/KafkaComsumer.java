@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class KafkaComsumer {
 
-    @KafkaListener(topics = {"hello"})
-    public void comsumer(String message){
-        log.info("c1 消费了 hello topic message:{}",message);
-    }
+//    @KafkaListener(topics = {"hello"})
+//    public void comsumer(String message){
+//        log.info("c1 消费了 hello topic message:{}",message);
+//    }
 }
