@@ -6,12 +6,12 @@ import com.wangp.myaop.service.BtShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Controller
@@ -78,5 +78,28 @@ public class ThymeleafController {
     @GetMapping("/index")
     public String index() {
         return "index";
+    }
+
+    @PostMapping("/upload")
+    public String upload(@RequestParam("file") MultipartFile file, Model model){
+        if (file.isEmpty()){
+            model.addAttribute("message", "The file is empty!");
+            return "/msg";
+        }
+        try{
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get("D:\\" + file.getOriginalFilename());
+            Files.write(path, bytes);
+            model.addAttribute("message", "success");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "/msg";
+    }
+
+    @GetMapping("/to")
+    public String toUpFilePage(){
+        return "upfile";
     }
 }

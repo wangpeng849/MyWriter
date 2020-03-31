@@ -1,0 +1,45 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <title>test3</title>
+</head>
+
+<body>
+    <p>
+        今天是: <span th:text="${#dates.format(today,'yyyy-MM-dd HH:mm:ss')}">2019/12/19</span>
+    </p>
+
+
+<!--    字符串字面值
+        使用一对'引用的内容就是字符串字面值了：-->
+    <p>
+        你正在观看 <span th:text="'thymeleaf'">template</span> 的字符串常量值.
+    </p>
+
+<!--    数字字面值
+        数字不需要任何特殊语法， 写的什么就是什么，而且可以直接进行算术运算-->
+
+    <p>今年是 <span th:text="2018">1900</span>.</p>
+    <p>两年后将会是 <span th:text="2018 + 2">1902</span>.</p>
+
+<!--    布尔字面值
+        布尔类型的字面值是true或false：-->
+
+    <div th:if="true">
+        你填的是true
+    </div>
+
+<!--    方法_拼接-->
+<!--    我们经常会用到普通字符串与表达式拼接的情况：-->
+
+    <span th:text="'欢迎您:' + ${user.name} + '!'"></span>
+    <!--字符串字面值需要用''，拼接起来非常麻烦，Thymeleaf对此进行了简化，使用一对|即可：-->
+
+    <span th:text="|欢迎您:${user.name}!|"></span>
+
+    <span th:text="${user.age}"></span>         //21
+    <span th:text="${user.age}%2 == 0"></span>  //false
+</body>
+</html>
