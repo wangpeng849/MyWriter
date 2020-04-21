@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 @EnableScheduling
-public class MyaopApplication {
+public class    MyaopApplication {
 //    @Autowired
 //    private Product product;
 
