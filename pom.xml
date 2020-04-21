@@ -192,6 +192,11 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
+<dependency>
+    <groupId>org</groupId>
+    <artifactId></artifactId>
+</dependency>
+
     </dependencies>
 
     <build>
