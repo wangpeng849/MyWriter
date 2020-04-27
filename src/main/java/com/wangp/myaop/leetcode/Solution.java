@@ -136,7 +136,7 @@ public class Solution {
      * @return
      */
     public int minDeletionSize(String[] A) {
-        if(A.length < 2){
+        if (A.length < 2) {
             return 0;
         }
         for (int i = 0; i < A.length; i++) {
@@ -149,14 +149,15 @@ public class Solution {
     /**
      * 数组中的逆序对
      * TODO 归并排序
+     *
      * @param nums
      * @return
      */
     public int reversePairs(int[] nums) {
         int ans = 0;
-        for(int i=0;i<nums.length;i++){
-            for (int j = i+1; j < nums.length; j++) {
-                if(nums[i]>nums[j]){
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] > nums[j]) {
                     ans++;
                 }
             }
@@ -164,12 +165,75 @@ public class Solution {
         return ans;
     }
 
+    /**
+     * 全排列
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> output = new ArrayList();
+        for (int num : nums) {
+            output.add(num);
+        }
+
+        List<List<Integer>> res = new LinkedList<>();
+        backtrack(nums.length, res, output, 0);
+        return res;
+    }
+
+    private void backtrack(int n, List<List<Integer>> res, List<Integer> output, int first) {
+        if (first == n) {
+            res.add(new ArrayList<>(output));
+        }
+        for (int i = first; i < n; i++) {
+            Collections.swap(output, first, i);
+            backtrack(n, res, output, first + 1);
+            Collections.swap(output, first, i);
+        }
+    }
+
+
+    /**
+     * 搜索旋转排序数组
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        int size = nums.length;
+        if (size <= 0) {
+            return -1;
+        }
+        if (size == 1) {
+            return nums[size] == target ? 0 : -1;
+        }
+        int l = 0;
+        int r = size - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] == target) return mid;
+            if (nums[0] <= nums[mid]) {
+                if (nums[0] <= target && target < nums[mid]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[size - 1]) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int i = solution.waysToChange(61);
-        System.out.println(i);
-        int x,y,z;
-        x = y = z= 1;
-        System.out.println(x+"-"+y+"-"+z);
+        System.out.println(solution.search(new int[]{ 2, 3, 4, 5, 6, 7, 8, 9 ,0, 1}, 1));
     }
 }
