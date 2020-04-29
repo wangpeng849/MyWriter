@@ -25,12 +25,12 @@ public class QuartzConfiguration {
      * 需要重写Factory相关代码。实现Spring容器管理JobDetail。
      * @return
      */
-    @Bean
-    public JobDetailFactoryBean initJobDetailFactoryBean(){
-        JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(SpringbootQuartzJobDemo.class);
-        return factoryBean;
-    }
+//    @Bean
+//    public JobDetailFactoryBean initJobDetailFactoryBean(){
+//        JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+//        factoryBean.setJobClass(SpringbootQuartzJobDemo.class);
+//        return factoryBean;
+//    }
 
 
 }

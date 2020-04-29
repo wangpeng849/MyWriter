@@ -232,8 +232,56 @@ public class Solution {
     }
 
 
+    /**
+     * 数组中数字出现的次数
+     *
+     * @param
+     */
+    public int[] singleNumbers(int[] nums) {
+        int[] ans = new int[2];
+        int ret = 0;
+        for (int n : nums)
+            ret ^= n;
+        int div = 1;
+        while ((div & ret) == 0)
+            div <<= 1;
+        int a = 0, b = 0;
+        for (int n : nums)
+            if ((div & n) != 0)
+                a ^= n;
+            else
+                b ^= n;
+        ans[0] = a;
+        ans[1] = b;
+        return ans;
+    }
+
+    /**
+     * 独一无二的出现次数
+     *
+     * @param arr
+     * @return
+     */
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> map = new HashMap();
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(arr[i])) {
+                int value = map.get(arr[i]);
+                map.put(arr[i], ++value);
+            } else {
+                map.put(arr[i], 1);
+            }
+        }
+        Set<Map.Entry<Integer, Integer>> entries = map.entrySet();
+        Set set = new HashSet();
+        for (Map.Entry<Integer, Integer> entry : entries) {
+            set.add(entry.getValue());
+        }
+        return map.size() == set.size();
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.search(new int[]{ 2, 3, 4, 5, 6, 7, 8, 9 ,0, 1}, 1));
+        System.out.println(solution.uniqueOccurrences(new int[]{1, 2, 2, 1, 1, 3}));
     }
 }
