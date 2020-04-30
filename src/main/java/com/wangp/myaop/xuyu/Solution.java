@@ -1,8 +1,6 @@
 package com.wangp.myaop.xuyu;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Solution {
 
@@ -15,8 +13,21 @@ public class Solution {
         map.put("b","123");
         map.put("c","46");
         map.put("a","458");
-
         System.out.println(map);
+
+        Set set = new LinkedHashSet();
+        set.add("111");
+        set.add("222");
+        set.add("11");
+        set.add("333");
+        set.add("343");
+        set.add("313");
+        set.add("383");
+        set.add("443");
+        set.add("213");
+        for (Object o : set) {
+            System.out.println(o);
+        }
 
     }
 }
