@@ -280,8 +280,75 @@ public class Solution {
         return map.size() == set.size();
     }
 
+    /**
+     * 数字跳跃
+     *
+     * @param nums
+     */
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        int rightmost = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i <= rightmost) {
+                rightmost = Math.max(rightmost, i + nums[i]);
+            }
+            if (rightmost >= n - 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 跳跃游戏2
+     *
+     * @param nums O(n^2)
+     * @return
+     */
+    public int jump(int[] nums) {
+        int position = nums.length - 1;
+        int step = 0;
+        while (position > 0) {
+            for (int i = 0; i < position; i++) {
+                if (i + nums[i] >= position) {
+                    position = i;
+                    step++;
+                    break;
+                }
+            }
+        }
+        return step;
+    }
+
+    /**
+     * 跳跃游戏2
+     *
+     * @param nums
+     * @return
+     */
+    public int jump2(int[] nums) {
+        int len = nums.length;
+        int end = 0;
+        int maxPosition = 0;
+        int step = 0;
+        for (int i = 0; i < len - 1; i++) {
+            maxPosition = Math.max(maxPosition,i+nums[i]);
+            if(i == end){
+                end = maxPosition;
+                step ++;
+            }
+        }
+        return step;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.uniqueOccurrences(new int[]{1, 2, 2, 1, 1, 3}));
+        System.out.println(solution.jump(new int[]{1, 2, 2, 1, 4, 3}));
+        int[] ints = Arrays.copyOf(new int[]{1, 2, 3, 4, 5}, 10);
+        System.out.println(Arrays.toString(ints));
+        int[] arr = new int[]{1,2,3,0,0,0,7,8,9,0};
+        System.arraycopy(arr,2,new int[]{4,5,6},0,3);
+        System.out.println(Arrays.toString(arr));
+
     }
 }

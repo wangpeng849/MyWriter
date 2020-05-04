@@ -60,6 +60,5 @@ public class LocalDateTimeUtil {
         System.out.println("时间戳转字符串 ---> " + timeStamp2String);
         Long stamp = LocalDateTimeUtil.string2TimeStamp(timeStamp2String);
         System.out.println("字符串转时间戳 ---> " + stamp);
-        String name = "xxxx";
     }
 }
