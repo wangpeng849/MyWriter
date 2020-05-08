@@ -1,6 +1,8 @@
 package com.wangp.myaop.leetcode;
 
 import lombok.Data;
+import org.apache.poi.ss.formula.functions.T;
+import org.thymeleaf.model.IStandaloneElementTag;
 
 import java.io.File;
 import java.util.*;
@@ -97,6 +99,7 @@ public class Solution {
 
                 nodeStack.push(node.left);
                 nodeStack.push(node.right);
+
                 depthStack.push(depth + 1);
                 depthStack.push(depth + 1);
             }
@@ -341,14 +344,94 @@ public class Solution {
         return step;
     }
 
+    /**
+     * 验证是否为二叉搜索树
+     * 方法一: 递归
+     * @param node
+     * @param lower
+     * @param upper
+     * @return
+     */
+    public boolean helper(TreeNode node, Integer lower, Integer upper) {
+        if (node == null) return true;
+
+        int val = node.val;
+        if (lower != null && val <= lower) return false;
+        if (upper != null && val >= upper) return false;
+
+        if (! helper(node.right, val, upper)) return false;
+        if (! helper(node.left, lower, val)) return false;
+        return true;
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }
+
+    /**
+     * 验证是否为二叉搜索树
+     * 方法二：中序遍历
+     * @param root
+     * @return
+     */
+    public boolean isValidBST2(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        double inorder = -Double.MAX_VALUE;
+        while(!stack.isEmpty() || root != null){
+            while(root!=null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if(root.val <= inorder) return false;
+            inorder = root.val;
+            root = root.right;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.jump(new int[]{1, 2, 2, 1, 4, 3}));
-        int[] ints = Arrays.copyOf(new int[]{1, 2, 3, 4, 5}, 10);
-        System.out.println(Arrays.toString(ints));
-        int[] arr = new int[]{1,2,3,0,0,0,7,8,9,0};
-        System.arraycopy(arr,2,new int[]{4,5,6},0,3);
-        System.out.println(Arrays.toString(arr));
+        TreeNode root = new TreeNode(0);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        TreeNode node6 = new TreeNode(6);
+        node3.setLeft(node2);
+        node3.setRight(node4);
+        node2.setLeft(root);
+        root.setRight(node1);
+        node4.setRight(node6);
+        node6.setLeft(node5);
+        System.out.println(solution.isValidBST(node3));
 
+        solution.preOrderTree(node3);
+        solution.midOrderTree(node3);
+        solution.postOrderTree(node3);
+    }
+
+
+    public void preOrderTree(TreeNode root){
+        if(root!=null) {
+            System.out.println(root.val + " ");
+            preOrderTree(root.left);
+            preOrderTree(root.right);
+        }
+    }
+    public void midOrderTree(TreeNode root){
+        if(root!=null) {
+            midOrderTree(root.left);
+            System.out.println(root.val + " ");
+            midOrderTree(root.right);
+        }
+    }
+    public void postOrderTree(TreeNode root){
+        if(root!=null) {
+            postOrderTree(root.left);
+            postOrderTree(root.right);
+            System.out.println(root.val + " ");
+        }
     }
 }
