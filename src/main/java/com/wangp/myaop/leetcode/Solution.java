@@ -1,11 +1,14 @@
 package com.wangp.myaop.leetcode;
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.thymeleaf.model.IStandaloneElementTag;
 
+import javax.management.Query;
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * @Author wangp
@@ -335,10 +338,10 @@ public class Solution {
         int maxPosition = 0;
         int step = 0;
         for (int i = 0; i < len - 1; i++) {
-            maxPosition = Math.max(maxPosition,i+nums[i]);
-            if(i == end){
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == end) {
                 end = maxPosition;
-                step ++;
+                step++;
             }
         }
         return step;
@@ -347,6 +350,7 @@ public class Solution {
     /**
      * 验证是否为二叉搜索树
      * 方法一: 递归
+     *
      * @param node
      * @param lower
      * @param upper
@@ -359,8 +363,8 @@ public class Solution {
         if (lower != null && val <= lower) return false;
         if (upper != null && val >= upper) return false;
 
-        if (! helper(node.right, val, upper)) return false;
-        if (! helper(node.left, lower, val)) return false;
+        if (!helper(node.right, val, upper)) return false;
+        if (!helper(node.left, lower, val)) return false;
         return true;
     }
 
@@ -371,64 +375,192 @@ public class Solution {
     /**
      * 验证是否为二叉搜索树
      * 方法二：中序遍历
+     *
      * @param root
      * @return
      */
-    public boolean isValidBST2(TreeNode root){
+    public boolean isValidBST2(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         double inorder = -Double.MAX_VALUE;
-        while(!stack.isEmpty() || root != null){
-            while(root!=null) {
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
             root = stack.pop();
-            if(root.val <= inorder) return false;
+            if (root.val <= inorder) return false;
             inorder = root.val;
             root = root.right;
         }
         return true;
     }
 
+    /**
+     * 最小栈
+     *
+     * @param
+     */
+    static class MinStack {
+
+        private Stack<Integer> stack;
+        private Stack<Integer> min_stack;
+
+        /**
+         * initialize your data structure here.
+         */
+        public MinStack() {
+            stack = new Stack();
+            min_stack = new Stack();
+        }
+
+        public void push(int x) {
+            stack.push(x);
+            if (!min_stack.isEmpty()) {
+                int top = min_stack.peek();
+                //小于的时候才入栈
+                if (x <= top) {
+                    min_stack.push(x);
+                }
+            }else{
+                min_stack.push(x);
+            }
+        }
+
+        public void pop() {
+            int pop = stack.pop();
+            int top = min_stack.peek();
+            if(top == pop) {
+                min_stack.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return min_stack.peek();
+        }
+    }
+
+    /**
+     * 最小栈 2
+     * 不用辅助栈
+     */
+    static class MinStack2{
+
+        private Stack<Integer> stack;
+        private Integer min=Integer.MAX_VALUE;
+
+        /**
+         * initialize your data structure here.
+         */
+        public MinStack2() {
+            stack = new Stack();
+        }
+
+        public void push(int x) {
+           if(x<min){
+               stack.push(min);
+               min = x;
+           }
+           stack.push(x);
+        }
+
+        public void pop() {
+            int pop = stack.pop();
+            if(pop==min){
+                  min = stack.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return min;
+        }
+    }
+
+    /**
+     * 二叉树层次遍历
+     * @param
+     */
+    public List<List<Integer>> levelOrder(TreeNode root){
+        List<List<Integer>> res = new ArrayList<>();
+        inorderTraverse(res,root,0);
+        return res;
+    }
+
+    private void inorderTraverse(List<List<Integer>> res,TreeNode root, int level) {
+        if(root!=null){
+            if(res.size() == level){
+                res.add(new ArrayList<>());
+            }
+            res.get(level).add(root.val);
+            inorderTraverse(res,root.left,level+1);
+            inorderTraverse(res,root.right,level+1);
+        }
+    }
+
+    /**
+     *  整数翻转
+     * @param error
+     */
+    public int reverseInt(int num){
+        if(num==0 || num<Integer.MIN_VALUE || num > Integer.MAX_VALUE) {
+            return 0;
+        }
+        String numStr = num+"";
+        String res = StringUtils.reverse(numStr);
+        if(res.endsWith("-")){
+            res = ("-"+res).substring(0,res.length());
+        }
+        int result = Integer.valueOf(res) > Integer.MAX_VALUE ? 0 :
+                Integer.valueOf(res) < Integer.MIN_VALUE ? 0:Integer.valueOf(res);
+        return result;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
-        TreeNode root = new TreeNode(0);
-        TreeNode node1 = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
-        TreeNode node5 = new TreeNode(5);
-        TreeNode node6 = new TreeNode(6);
-        node3.setLeft(node2);
-        node3.setRight(node4);
-        node2.setLeft(root);
-        root.setRight(node1);
-        node4.setRight(node6);
-        node6.setLeft(node5);
-        System.out.println(solution.isValidBST(node3));
-
-        solution.preOrderTree(node3);
-        solution.midOrderTree(node3);
-        solution.postOrderTree(node3);
+//        树模拟数据
+//        TreeNode root = new TreeNode(0);
+//        TreeNode node1 = new TreeNode(1);
+//        TreeNode node2 = new TreeNode(2);
+//        TreeNode node3 = new TreeNode(3);
+//        TreeNode node4 = new TreeNode(4);
+//        TreeNode node5 = new TreeNode(5);
+//        TreeNode node6 = new TreeNode(6);
+//        node3.setLeft(node2);
+//        node3.setRight(node4);
+//        node2.setLeft(root);
+//        root.setRight(node1);
+//        node4.setRight(node6);
+//        node6.setLeft(node5);
+//        List<List<Integer>> lists = solution.levelOrder(node3);
+//        System.out.println(lists);
     }
 
 
-    public void preOrderTree(TreeNode root){
-        if(root!=null) {
+    public void preOrderTree(TreeNode root) {
+        if (root != null) {
             System.out.println(root.val + " ");
             preOrderTree(root.left);
             preOrderTree(root.right);
         }
     }
-    public void midOrderTree(TreeNode root){
-        if(root!=null) {
+
+    public void midOrderTree(TreeNode root) {
+        if (root != null) {
             midOrderTree(root.left);
             System.out.println(root.val + " ");
             midOrderTree(root.right);
         }
     }
-    public void postOrderTree(TreeNode root){
-        if(root!=null) {
+
+    public void postOrderTree(TreeNode root) {
+        if (root != null) {
             postOrderTree(root.left);
             postOrderTree(root.right);
             System.out.println(root.val + " ");

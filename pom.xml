@@ -237,6 +237,14 @@
             <version>1.2.5</version>
         </dependency>
 
+        <!-- 简繁转换 -->
+        <dependency>
+            <groupId>com.github.nobodxbodon.zhconverter</groupId>
+            <artifactId>zhconverter</artifactId>
+            <version>0.0.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/zhconverter-0.0.5.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
