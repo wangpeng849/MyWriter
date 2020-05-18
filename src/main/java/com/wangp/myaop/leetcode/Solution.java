@@ -421,7 +421,7 @@ public class Solution {
                 if (x <= top) {
                     min_stack.push(x);
                 }
-            }else{
+            } else {
                 min_stack.push(x);
             }
         }
@@ -429,7 +429,7 @@ public class Solution {
         public void pop() {
             int pop = stack.pop();
             int top = min_stack.peek();
-            if(top == pop) {
+            if (top == pop) {
                 min_stack.pop();
             }
         }
@@ -447,10 +447,10 @@ public class Solution {
      * 最小栈 2
      * 不用辅助栈
      */
-    static class MinStack2{
+    static class MinStack2 {
 
         private Stack<Integer> stack;
-        private Integer min=Integer.MAX_VALUE;
+        private Integer min = Integer.MAX_VALUE;
 
         /**
          * initialize your data structure here.
@@ -460,17 +460,17 @@ public class Solution {
         }
 
         public void push(int x) {
-           if(x<min){
-               stack.push(min);
-               min = x;
-           }
-           stack.push(x);
+            if (x < min) {
+                stack.push(min);
+                min = x;
+            }
+            stack.push(x);
         }
 
         public void pop() {
             int pop = stack.pop();
-            if(pop==min){
-                  min = stack.pop();
+            if (pop == min) {
+                min = stack.pop();
             }
         }
 
@@ -485,42 +485,70 @@ public class Solution {
 
     /**
      * 二叉树层次遍历
+     *
      * @param
      */
-    public List<List<Integer>> levelOrder(TreeNode root){
+    public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
-        inorderTraverse(res,root,0);
+        inorderTraverse(res, root, 0);
         return res;
     }
 
-    private void inorderTraverse(List<List<Integer>> res,TreeNode root, int level) {
-        if(root!=null){
-            if(res.size() == level){
+    private void inorderTraverse(List<List<Integer>> res, TreeNode root, int level) {
+        if (root != null) {
+            if (res.size() == level) {
                 res.add(new ArrayList<>());
             }
             res.get(level).add(root.val);
-            inorderTraverse(res,root.left,level+1);
-            inorderTraverse(res,root.right,level+1);
+            inorderTraverse(res, root.left, level + 1);
+            inorderTraverse(res, root.right, level + 1);
         }
     }
 
     /**
-     *  整数翻转
+     * 整数翻转
+     *
      * @param error
      */
-    public int reverseInt(int num){
-        if(num==0 || num<Integer.MIN_VALUE || num > Integer.MAX_VALUE) {
+    public int reverseInt(int num) {
+        if (num == 0 || num < Integer.MIN_VALUE || num > Integer.MAX_VALUE) {
             return 0;
         }
-        String numStr = num+"";
+        String numStr = num + "";
         String res = StringUtils.reverse(numStr);
-        if(res.endsWith("-")){
-            res = ("-"+res).substring(0,res.length());
+        if (res.endsWith("-")) {
+            res = ("-" + res).substring(0, res.length());
         }
         int result = Integer.valueOf(res) > Integer.MAX_VALUE ? 0 :
-                Integer.valueOf(res) < Integer.MIN_VALUE ? 0:Integer.valueOf(res);
+                Integer.valueOf(res) < Integer.MIN_VALUE ? 0 : Integer.valueOf(res);
         return result;
     }
+
+    /**
+     * 乘积最大子数组
+     *
+     * @param nums
+     * @return
+     */
+    public int maxProduct(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int tmp_max = 1;
+        int tmp_min = 1;
+        for (int i = 0; i < nums.length; i++) {
+            tmp_max = tmp_max * nums[i];
+            tmp_min = tmp_min * nums[i];
+            if (nums[i] < 0) {
+                tmp_max = tmp_min ^ tmp_max;
+                tmp_min = tmp_min ^ tmp_max;
+                tmp_max = tmp_min ^ tmp_max;
+            }
+            tmp_max = tmp_max > nums[i] ? tmp_max : nums[i];
+            tmp_min = tmp_min < nums[i] ? tmp_min : nums[i];
+            max = tmp_max > max ? tmp_max : max;
+        }
+        return max;
+    }
+
 
     public static void main(String[] args) {
         Solution solution = new Solution();
@@ -540,6 +568,8 @@ public class Solution {
 //        node6.setLeft(node5);
 //        List<List<Integer>> lists = solution.levelOrder(node3);
 //        System.out.println(lists);
+        int i = solution.maxProduct(new int[]{1, 2, 3, -1, -3, 2, 2});
+        System.out.println(i);
     }
 
 
