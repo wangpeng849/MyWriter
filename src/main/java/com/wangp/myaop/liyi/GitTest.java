@@ -7,5 +7,5 @@ package com.wangp.myaop.liyi;
  */
 public class GitTest {
     private String niu;
-    private String bi;
+    private String bilibili;
 }
