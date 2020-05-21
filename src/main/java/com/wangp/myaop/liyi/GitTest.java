@@ -12,4 +12,5 @@ public class GitTest {
     private String tencent;
     private String go_first;
     private String go_again;
+    private String demo_go;
 }
