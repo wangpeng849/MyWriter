@@ -8,4 +8,5 @@ package com.wangp.myaop.liyi;
 public class GitTest {
     private String niu;
     private String bilibili;
+    private String baidu;
 }
