@@ -6,7 +6,7 @@ package com.wangp.myaop.liyi;
  * @Version 1.0
  */
 public class GitTest {
-    private String niu;
+    private String niubi;
     private String bilibili;
     private String baidu;
     private String tencent;
