@@ -5,7 +5,7 @@ package com.wangp.myaop.sort_algorithm;
  * @Date 2020/5/20
  * @Version 1.0
  */
-public class BubbleSort3 extends Sort {
+public class BubbleSort3<E  extends Comparable<E>> extends Sort<E>{
 
     //优化二
     //记录最后一次交换的位置

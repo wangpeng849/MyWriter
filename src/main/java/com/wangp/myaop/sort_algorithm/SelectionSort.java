@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @Date 2020/5/20
  * @Version 1.0
  */
-public class SelectionSort extends Sort {
+public class SelectionSort<E  extends Comparable<E>> extends Sort<E> {
     @Override
     protected void sort() {
         for (int end = array.length - 1; end > 0; end--) {

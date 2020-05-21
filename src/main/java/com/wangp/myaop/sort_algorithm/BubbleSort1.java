@@ -5,7 +5,7 @@ package com.wangp.myaop.sort_algorithm;
  * @Date 2020/5/20
  * @Version 1.0
  */
-public class BubbleSort1 extends Sort {
+public class BubbleSort1<E  extends Comparable<E>> extends Sort<E>{
 
     @Override
     protected void sort() {

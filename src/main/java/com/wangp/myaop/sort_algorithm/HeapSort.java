@@ -6,7 +6,7 @@ package com.wangp.myaop.sort_algorithm;
  * @Version 1.0
  */
 //堆排序可以看做是选择排序的优化版
-public class HeapSort extends Sort {
+public class HeapSort<E  extends Comparable<E>> extends Sort<E> {
     private int heapSize;
 
     @Override
@@ -27,18 +27,18 @@ public class HeapSort extends Sort {
     }
 
     private void shiftDown(int index) {
-        int element = array[index];
+        E element = array[index];
         int half = heapSize >> 1;
         while (index < half) {
             int childIndex = (index << 1) + 1;
-            int child = array[childIndex];
+            E child = array[childIndex];
 
             int rightIndex = childIndex + 1;
-            if (rightIndex < heapSize && cmpElement(array[rightIndex], child) > 0) {
+            if (rightIndex < heapSize && cmp(array[rightIndex], child) > 0) {
                 child = array[childIndex = rightIndex];
             }
 
-            if (cmpElement(element, child) >= 0) break;
+            if (cmp(element, child) >= 0) break;
             array[index] = child;
             index = childIndex;
         }

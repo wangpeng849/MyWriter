@@ -7,10 +7,11 @@ import java.util.Arrays;
  * @Date 2020/5/20
  * @Version 1.0
  */
+@SuppressWarnings({"rawtypes","unchecked"})//消除泛型警告
 public class Main {
 
     public static void main(String[] args) {
-        int[] arr  = ArrayUtil.getAscArr(10000);
+        Integer [] arr  = ArrayUtil.getRandomArr(10000);
         testSorts(arr,
                 new SelectionSort(),
                 new HeapSort(),
@@ -20,9 +21,11 @@ public class Main {
                 new BubbleSort2());
     }
 
-    static void testSorts(int[] array,Sort...sorts){
+    static void testSorts(Integer[] array,Sort...sorts){
         for (Sort sort : sorts) {
-            sort.sort(ArrayUtil.copy(array));
+            Integer[] copy = ArrayUtil.copy(array);
+            sort.sort(copy);
+            ArrayUtil.test(ArrayUtil.isAscOrder(copy));
         }
         Arrays.sort(sorts);
         for (Sort sort : sorts) {

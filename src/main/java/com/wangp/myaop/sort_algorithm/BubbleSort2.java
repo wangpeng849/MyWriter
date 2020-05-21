@@ -5,7 +5,7 @@ package com.wangp.myaop.sort_algorithm;
  * @Date 2020/5/20
  * @Version 1.0
  */
-public class BubbleSort2 extends Sort {
+public class BubbleSort2<E  extends Comparable<E>> extends Sort<E>{
     //优化1
     //如果数组本身就是有序的 就没必要继续排序
     @Override
