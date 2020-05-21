@@ -11,4 +11,5 @@ public class GitTest {
     private String baidu;
     private String tencent;
     private String go_first;
+    private String go_again;
 }
