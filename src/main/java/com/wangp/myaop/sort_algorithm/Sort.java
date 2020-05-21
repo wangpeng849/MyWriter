@@ -1,7 +1,5 @@
 package com.wangp.myaop.sort_algorithm;
 
-import com.wangp.myaop.util.DecimalsUtil;
-
 import java.text.DecimalFormat;
 
 /**
@@ -28,8 +26,8 @@ public abstract class Sort<E extends Comparable<E>> implements Comparable<Sort<E
     protected abstract void sort();
 
     /**
-     * @param i1
-     * @param i2
+     * @param i1 索引1
+     * @param i2 索引2
      * @return 0 两个相等 1 i1>i2 -1 i1<i2
      */
     protected int cmp(int i1, int i2) {
@@ -54,8 +52,8 @@ public abstract class Sort<E extends Comparable<E>> implements Comparable<Sort<E
         String name = "【" + getClass().getSimpleName() + "】\n";
         String compare = "比较了" + numberString(cmpCount) + "次,";
         String swap = "交换了" + numberString(swapCount) + "次,";
-        String stableStr = "稳定性：" + isStable() + ","; //稳定性会调用swap 和 cmp 方法 此处放后面则不会影响次数
         String t = "耗时" + time + "ms,\n";
+        String stableStr = "稳定性：" + isStable() + ","; //稳定性会调用swap 和 cmp 以及时间方法 此处放后面则不会影响次数
         return name + compare + swap + stableStr + t + "---------------------------------------------------\n";
     }
 

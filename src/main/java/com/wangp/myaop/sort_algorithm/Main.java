@@ -1,5 +1,7 @@
 package com.wangp.myaop.sort_algorithm;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.Arrays;
 
 /**
@@ -10,15 +12,15 @@ import java.util.Arrays;
 @SuppressWarnings({"rawtypes","unchecked"})//消除泛型警告
 public class Main {
 
-    public static void main(String[] args) {
-        Integer [] arr  = ArrayUtil.getRandomArr(10000);
+    public static void main(String[] args) throws ParseException {
+        Integer [] arr  = Integers.random(10000,1,20000);
         testSorts(arr,
                 new SelectionSort(),
                 new HeapSort(),
                 new BubbleSort3(),
-                new BubbleSort(),
-                new BubbleSort1(),
-                new BubbleSort2());
+                new InsertionSort(),
+                new InsertionSort2()
+        );
     }
 
     static void testSorts(Integer[] array,Sort...sorts){
