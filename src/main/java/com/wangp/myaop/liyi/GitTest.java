@@ -10,4 +10,5 @@ public class GitTest {
     private String bilibili;
     private String baidu;
     private String tencent;
+    private String demo_go;
 }
