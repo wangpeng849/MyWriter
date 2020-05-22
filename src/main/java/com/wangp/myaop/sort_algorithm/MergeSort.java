@@ -41,7 +41,7 @@ public class MergeSort<E extends Comparable<E>> extends Sort<E> {
      *   令 S(n) = T(n)/n
      *   S(1) = O(1)
      *   S(n) = S(n/2) + O(1) = S(n/4) + O(2) = S(n/8) + O(3) = S(n/2^k) + O(n) = S(1) + O(log n) = O(log n)
-     *   T(n) = n * S(n) = O(n*log n)
+     *   T(n) = n * S(n) = O(n * log n)
      */
 
     /**

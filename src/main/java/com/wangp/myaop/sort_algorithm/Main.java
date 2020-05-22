@@ -13,15 +13,14 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) throws ParseException {
-        Integer [] arr  = Integers.random(20000,1,20000);
+        Integer [] arr  = Integers.random(20000,1,50000);
         testSorts(arr,
-                new SelectionSort(),
+//                new SelectionSort(),
                 new HeapSort(),
-                new BubbleSort3(),
-                new InsertionSort(),
-                new InsertionSort2(),
-                new InsertionSort3(),
-                new MergeSort()
+//                new BubbleSort3(),
+//                new InsertionSort3(),
+                new MergeSort(),
+                new QuickSort()
         );
     }
 
