@@ -1,4 +1,8 @@
-package com.wangp.myaop.sort_algorithm;
+package com.wangp.myaop.sort_algorithm.cmp;
+
+import com.wangp.myaop.sort_algorithm.CountingSort;
+import com.wangp.myaop.sort_algorithm.CountingSort2;
+import com.wangp.myaop.sort_algorithm.RadixSort;
 
 import java.text.DecimalFormat;
 
@@ -77,7 +81,9 @@ public abstract class Sort<E extends Comparable<E>> implements Comparable<Sort<E
 
     private boolean isStable(){
         if(this instanceof ShellSort) return false;
-
+        if(this instanceof CountingSort) return false;
+        if(this instanceof CountingSort2) return true;
+        if(this instanceof RadixSort) return true;
         Student[] students = new Student[20];
         for (int i = 0; i < students.length; i++) {
             students[i] = new Student(i*10,10);

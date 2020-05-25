@@ -1,7 +1,4 @@
-package com.wangp.myaop.sort_algorithm;
-
-import java.util.Arrays;
-import java.util.Random;
+package com.wangp.myaop.sort_algorithm.cmp;
 
 /**
  * @Author wangp

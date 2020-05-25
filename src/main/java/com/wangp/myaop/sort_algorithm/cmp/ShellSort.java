@@ -1,4 +1,4 @@
-package com.wangp.myaop.sort_algorithm;
+package com.wangp.myaop.sort_algorithm.cmp;
 
 import java.util.ArrayList;
 import java.util.List;

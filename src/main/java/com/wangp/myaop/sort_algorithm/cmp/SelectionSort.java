@@ -1,7 +1,4 @@
-package com.wangp.myaop.sort_algorithm;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
+package com.wangp.myaop.sort_algorithm.cmp;
 
 /**
  * @Author wangp

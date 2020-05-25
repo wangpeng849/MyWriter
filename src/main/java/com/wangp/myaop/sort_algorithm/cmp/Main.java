@@ -1,6 +1,9 @@
-package com.wangp.myaop.sort_algorithm;
+package com.wangp.myaop.sort_algorithm.cmp;
 
-import java.text.DecimalFormat;
+import com.wangp.myaop.sort_algorithm.CountingSort;
+import com.wangp.myaop.sort_algorithm.CountingSort2;
+import com.wangp.myaop.sort_algorithm.RadixSort;
+
 import java.text.ParseException;
 import java.util.Arrays;
 
@@ -13,7 +16,7 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) throws ParseException {
-        Integer [] arr  = Integers.random(10000,1,10000);
+        Integer [] arr  = Integers.random(50000,1,50000);
         testSorts(arr,
                 new SelectionSort(),
                 new HeapSort(),
@@ -21,7 +24,9 @@ public class Main {
                 new InsertionSort3(),
                 new MergeSort(),
                 new QuickSort(),
-                new ShellSort()
+                new ShellSort(),
+//                new CountingSort2()
+                new RadixSort()
         );
     }
 
