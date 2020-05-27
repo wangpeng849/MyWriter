@@ -21,11 +21,30 @@ public class Main {
 
 //        testTime(new UnionFind_QuickFind(count));
 //        testTime(new UnionFind_QuickUnion(count));
-        testTime(new UnionFind_QuickUnion_S(count));
-        testTime(new UnionFind_QuickUnion_R(count));
+//        testTime(new UnionFind_QuickUnion_S(count));
+//        testTime(new UnionFind_QuickUnion_R(count));
         testTime(new UnionFind_QuickUnion_R_PC(count));
         testTime(new UnionFind_QuickUnion_R_PS(count));
         testTime(new UnionFind_QuickUnion_R_PH(count));
+
+//        GenericUnionFind<Student> uf = new GenericUnionFind<>();
+//        Student stu1 = new Student(1,"AAA");
+//        Student stu2 = new Student(2, "Rose");
+//        Student stu3 = new Student(3,"AAA");
+//        Student stu4 = new Student(4, "Rose");
+//        uf.makeSet(stu1);
+//        uf.makeSet(stu2);
+//        uf.makeSet(stu3);
+//        uf.makeSet(stu4);
+//        uf.union(stu1,stu2);
+//        uf.union(stu3,stu4);
+//        Asserts.test(uf.isSame(stu1,stu2));
+//        Asserts.test(uf.isSame(stu3,stu4));
+//        uf.union(stu1,stu4);
+//        Asserts.test(uf.isSame(stu2,stu3));
+
+        testTime(new GenericUnionFind<Integer>());
+
 
     }
 
@@ -47,6 +66,21 @@ public class Main {
     }
 
     static void testTime(UnionFind uf) throws IllegalAccessException {
+        Times.test(uf.getClass().getSimpleName(),()->{
+            for (int i = 0; i < count; i++) {
+                uf.union((int) (Math.random() * count), (int) (Math.random() * count));
+            }
+            for (int i = 0; i < count; i++) {
+                uf.isSame((int) (Math.random() * count), (int) (Math.random() * count));
+            }
+        });
+    }
+
+    static void testTime(GenericUnionFind<Integer> uf) throws IllegalAccessException {
+        for (int i = 0; i < count; i++) {
+            uf.makeSet(i);
+        }
+
         Times.test(uf.getClass().getSimpleName(),()->{
             for (int i = 0; i < count; i++) {
                 uf.union((int) (Math.random() * count), (int) (Math.random() * count));

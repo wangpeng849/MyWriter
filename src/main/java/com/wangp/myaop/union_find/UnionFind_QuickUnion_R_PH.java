@@ -16,9 +16,8 @@ public class UnionFind_QuickUnion_R_PH extends UnionFind_QuickUnion_R {
     public int find(int v) throws IllegalAccessException {
         rangeCheck(v);
         while (v != parents[v]) {
-            int p = parents[v];
             parents[v] = parents[parents[v]];
-            v = p;
+            v = parents[v];
         }
         return v;
     }
