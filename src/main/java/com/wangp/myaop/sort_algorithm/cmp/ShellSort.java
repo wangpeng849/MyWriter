@@ -20,7 +20,7 @@ public class ShellSort<E extends Comparable<E>> extends Sort<E> {
     }
 
     /**
-     * 分成stop列进行排序
+     * 分成ste p列进行排序
      *
      * @param step
      */
