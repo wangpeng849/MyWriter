@@ -1,5 +1,7 @@
 package com.wangp.myaop.s_graph;
 
+import com.wangp.myaop.union_find.GenericUnionFind;
+import com.wangp.myaop.union_find.UnionFind;
 import org.thymeleaf.model.IStandaloneElementTag;
 
 import java.util.*;
@@ -342,7 +344,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
 
     @Override
     public Set<EdgeInfo<V, E>> mst() {
-        return prim();
+        return kruskal();
     }
 
     private Set<EdgeInfo<V, E>> prim() {
@@ -374,6 +376,25 @@ public class ListGraph<V, E> extends Graph<V, E> {
     }
 
     private Set<EdgeInfo<V, E>> kruskal() {
-        return null;
+        int edgeSize = vertices.size() -1;
+        if(edgeSize == -1) return null;
+
+        Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        //放入所有边
+        MinHeap<Edge<V, E>> heap = new MinHeap<>(edges, edgeComparator);
+        GenericUnionFind uf = new GenericUnionFind<Vertex<V, E>>();
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            uf.makeSet(vertex);
+        });
+        while (!heap.isEmpty() && edgeInfos.size() < edgeSize) {
+            Edge<V, E> edge = heap.remove();
+            //如果构成环就continue
+            //判断构成环 使用并查集 本来在一个集合的就会构成环
+            if (uf.isSame(edge.from, edge.to)) continue;
+            edgeInfos.add(edge.info());
+            uf.union(edge.from,edge.to);
+        }
+        return edgeInfos;
     }
+
 }

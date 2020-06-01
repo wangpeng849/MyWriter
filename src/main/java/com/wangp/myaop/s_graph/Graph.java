@@ -9,7 +9,7 @@ import java.util.Set;
  * @Version 1.0
  * 图
  */
-public abstract class Graph<V,E> {
+public abstract class  Graph<V,E> {
 
    protected WeightManager<E> weightManager;
 
