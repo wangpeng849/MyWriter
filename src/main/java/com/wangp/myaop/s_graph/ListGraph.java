@@ -9,8 +9,15 @@ import java.util.*;
  * @Date 2020/5/27
  * @Version 1.0
  */
-public class ListGraph<V, E> implements Graph<V, E> {
+public class ListGraph<V, E> extends Graph<V, E> {
 
+    public ListGraph() {
+        super();
+    }
+
+    public ListGraph(WeightManager<E> weightManager) {
+        super(weightManager);
+    }
 
     /**
      * 顶点
@@ -79,10 +86,15 @@ public class ListGraph<V, E> implements Graph<V, E> {
         public int hashCode() {
             return from.hashCode() * 31 + to.hashCode();
         }
+
+        EdgeInfo<V, E> info() {
+            return new EdgeInfo<V, E>(from.value, to.value, weight);
+        }
     }
 
     private Map<V, Vertex<V, E>> vertices = new HashMap<>();
     private Set<Edge<V, E>> edges = new HashSet<>();
+    private Comparator<Edge<V, E>> edgeComparator = (Edge<V, E> e1, Edge<V, E> e2) -> weightManager.compare(e1.weight, e2.weight);
 
     public void print() {
         System.out.println("[顶点]");
@@ -92,9 +104,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
             System.out.println("InEdges = " + vertex.inEdges);
         });
         System.out.println("[边]");
-        edges.forEach((Edge<V, E> edge) -> {
-            System.out.println(edge);
-        });
+        edges.forEach(System.out::println);
     }
 
     @Override
@@ -266,7 +276,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
 
         while (!queue.isEmpty()) {
             Vertex<V, E> vertex = queue.poll();
-            if(visitor.visit(vertex.value)) break;
+            if (visitor.visit(vertex.value)) break;
             for (Edge<V, E> outEdge : vertex.outEdges) {
                 if (visitedVertices.contains(outEdge.to)) continue;
                 queue.offer(outEdge.to);
@@ -295,7 +305,7 @@ public class ListGraph<V, E> implements Graph<V, E> {
                 stack.push(outEdge.from);
                 stack.push(outEdge.to);
                 visitedVertex.add(outEdge.to);
-                if(visitor.visit(outEdge.to.value)) return;
+                if (visitor.visit(outEdge.to.value)) return;
                 break;
             }
         }
@@ -304,29 +314,66 @@ public class ListGraph<V, E> implements Graph<V, E> {
     @Override
     public List<V> topologicalSort() {
         List<V> list = new ArrayList<>();
-        Queue<Vertex<V,E>> queue = new LinkedList<>();
-        Map<Vertex<V,E>,Integer> ins = new HashMap<>();
+        Queue<Vertex<V, E>> queue = new LinkedList<>();
+        Map<Vertex<V, E>, Integer> ins = new HashMap<>();
 
         //将度为0的节点都放入队列
-        vertices.forEach((V v,Vertex<V,E> vertex) ->{
-            if(vertex.inEdges.size() == 0){
+        vertices.forEach((V v, Vertex<V, E> vertex) -> {
+            if (vertex.inEdges.size() == 0) {
                 queue.offer(vertex);
-            }else{
-                ins.put(vertex,vertex.inEdges.size());
+            } else {
+                ins.put(vertex, vertex.inEdges.size());
             }
         });
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Vertex<V, E> vertex = queue.poll();
             list.add(vertex.value);
             for (Edge<V, E> outEdge : vertex.outEdges) {
                 Integer toIn = ins.get(outEdge.to) - 1;
-                if(toIn == 0){
+                if (toIn == 0) {
                     queue.offer(outEdge.to);
-                }else{
-                    ins.put(outEdge.to,toIn);
+                } else {
+                    ins.put(outEdge.to, toIn);
                 }
             }
         }
         return list;
+    }
+
+    @Override
+    public Set<EdgeInfo<V, E>> mst() {
+        return prim();
+    }
+
+    private Set<EdgeInfo<V, E>> prim() {
+        Iterator<Vertex<V, E>> it = vertices.values().iterator();
+        if (!it.hasNext()) return null;
+
+        Vertex<V, E> vertex = it.next();
+        Set<EdgeInfo<V, E>> edgeInfos = new HashSet<>();
+        Set<Vertex<V, E>> addedVertex = new HashSet<>();
+        //PriorityQueue底层就是最小堆  但是PriorityQueue构造函数只能传比较器或者Collections 所以自实现一个MinHeap来实现传两个
+//        PriorityQueue<Edge<V, E>> heap = new PriorityQueue<>((Edge<V, E> e1, Edge<V, E> e2) -> {
+//            return 0;
+//        });
+//      for循环效率太低 一次性建堆更好
+//        for (Edge<V, E> edge : vertex.outEdges) {
+//            heap.offer(edge);
+//        }
+
+        MinHeap<Edge<V, E>> heap = new MinHeap<>(vertex.outEdges, edgeComparator);
+        addedVertex.add(vertex);
+        while (!heap.isEmpty() && addedVertex.size() < vertices()) {
+            Edge<V, E> edge = heap.remove();
+            if (addedVertex.contains(edge.to)) continue;
+            edgeInfos.add(edge.info());
+            addedVertex.add(edge.to);
+            heap.addAll(edge.to.outEdges);
+        }
+        return edgeInfos;
+    }
+
+    private Set<EdgeInfo<V, E>> kruskal() {
+        return null;
     }
 }

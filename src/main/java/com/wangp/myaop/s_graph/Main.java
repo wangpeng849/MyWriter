@@ -1,6 +1,7 @@
 package com.wangp.myaop.s_graph;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author wangp
@@ -9,15 +10,36 @@ import java.util.List;
  */
 public class Main {
 
+    static Graph.WeightManager<Double> weightManager = new Graph.WeightManager<Double>() {
+        @Override
+        public int compare(Double w1, Double w2) {
+            return w1.compareTo(w2);
+        }
+
+        @Override
+        public Double add(Double w1, Double w2) {
+            return null;
+        }
+    };
+
     public static void main(String[] args) {
 //        test();
 //        testNoDirect();
 //        testBfs();
 //        testDfs();
-        testTopological();
+//        testTopological();
+        testMst();
     }
 
-    static void testTopological(){
+    static void testMst() {
+        Graph<Object, Double> graph = undirectedGraph(Data.MST_02);
+        Set<Graph.EdgeInfo<Object, Double>> mst = graph.mst();
+        for (Object o : mst) {
+            System.out.println(o);
+        }
+    }
+
+    static void testTopological() {
         Graph<Object, Double> graph = directedGraph(Data.TOPO);
         List<Object> list = graph.topologicalSort();
         System.out.println(list);
@@ -31,9 +53,9 @@ public class Main {
         });
     }
 
-    static void testBfs(){
+    static void testBfs() {
         Graph<Object, Double> graph = directedGraph(Data.BFS_02);
-        graph.bfs(5,o->{
+        graph.bfs(5, o -> {
             System.out.println(o);
             return false;
         });
@@ -41,23 +63,23 @@ public class Main {
 
     //无向图
     private static void testNoDirect() {
-        ListGraph<String,Integer> graph = new ListGraph<>();
-        graph.addEdge("V0","V1");
-        graph.addEdge("V1","V0");
+        ListGraph<String, Integer> graph = new ListGraph<>();
+        graph.addEdge("V0", "V1");
+        graph.addEdge("V1", "V0");
 
-        graph.addEdge("V0","V2");
-        graph.addEdge("V2","V0");
+        graph.addEdge("V0", "V2");
+        graph.addEdge("V2", "V0");
     }
 
 
-    static void test(){
-        ListGraph<String,Integer> graph = new ListGraph<>();
-        graph.addEdge("V1","V0",9);
-        graph.addEdge("V2","V0",2);
-        graph.addEdge("V1","V2",3);
-        graph.addEdge("V2","V3",5);
-        graph.addEdge("V3","V4",1);
-        graph.addEdge("V0","V4",6);
+    static void test() {
+        ListGraph<String, Integer> graph = new ListGraph<>();
+        graph.addEdge("V1", "V0", 9);
+        graph.addEdge("V2", "V0", 2);
+        graph.addEdge("V1", "V2", 3);
+        graph.addEdge("V2", "V3", 5);
+        graph.addEdge("V3", "V4", 1);
+        graph.addEdge("V0", "V4", 6);
 //        graph.print();
 
 //        graph.removeEdge("V0","V4");
@@ -87,11 +109,12 @@ public class Main {
 
     /**
      * 无向图
+     *
      * @param data
      * @return
      */
     private static Graph<Object, Double> undirectedGraph(Object[][] data) {
-        Graph<Object, Double> graph = new ListGraph<>();
+        Graph<Object, Double> graph = new ListGraph<>(weightManager);
         for (Object[] edge : data) {
             if (edge.length == 1) {
                 graph.addVertex(edge[0]);
