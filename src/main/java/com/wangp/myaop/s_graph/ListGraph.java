@@ -1,8 +1,6 @@
 package com.wangp.myaop.s_graph;
 
 import com.wangp.myaop.union_find.GenericUnionFind;
-import com.wangp.myaop.union_find.UnionFind;
-import org.thymeleaf.model.IStandaloneElementTag;
 
 import java.util.*;
 
@@ -344,6 +342,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
 
     @Override
     public Set<EdgeInfo<V, E>> mst() {
+        if(Math.random() > 0.5) return prim();
         return kruskal();
     }
 
@@ -397,4 +396,77 @@ public class ListGraph<V, E> extends Graph<V, E> {
         return edgeInfos;
     }
 
+    @Override
+    public Map<V, E> shortestPath(V begin) {
+        Vertex<V, E> beginVertex = vertices.get(begin);
+        if(beginVertex == null) return null;
+
+        //被选中的路径
+        Map<V,E> selectedPaths = new HashMap<>();
+        Map<Vertex<V,E>,E> paths = new HashMap<>();
+        //初始化paths
+        for (Edge<V, E> outEdge : beginVertex.outEdges) {
+            paths.put(outEdge.to,outEdge.weight);
+        }
+
+        while(!paths.isEmpty()) {
+            Map.Entry<Vertex<V, E>, E> minEntry = getMinPath(paths);
+            //minEntry离开桌面 对它 的outEdges进行松弛操作
+            Vertex<V, E> minVertex = minEntry.getKey();
+            selectedPaths.put(minVertex.value, minEntry.getValue());
+            paths.remove(minVertex);
+            //对minEntry的outEdges进行松弛操作
+            for (Edge<V, E> edge : minVertex.outEdges) {
+                //如果已选择就没必要松弛操作
+                if(selectedPaths.containsKey(edge.to.value)) continue;
+                //新的可选择的最短路径 beginVertex到edge.from 的最短路劲 + edge.weight
+                E newWeight = weightManager.add(minEntry.getValue(), edge.weight);
+                //以前的最短路径 beginVertex到edge.to的最短路径
+                E oldWeight = paths.get(edge.to);
+                if(oldWeight == null || weightManager.compare(newWeight,oldWeight)<0){
+                    paths.put(edge.to,newWeight);
+                }
+            }
+        }
+        selectedPaths.remove(begin);
+        return selectedPaths;
+    }
+
+    /**
+     * 松弛操作
+     */
+    private void relax(){
+
+    }
+
+    /**
+     * 从paths中挑一个最短的路劲出来
+     * @param paths
+     * @return
+     */
+    private Map.Entry<Vertex<V, E>, E> getMinPath(Map<Vertex<V,E>,E> paths){
+//        Vertex<V,E> minVertex= null;
+//        E minWeight = null;
+//        paths.forEach((Vertex<V,E> vertex,E weight)->{});  此方案在lambda表达式中不能赋值
+
+        //此方案 minWeight == null 每次都会判断
+//        for (Map.Entry<Vertex<V, E>, E> entry : paths.entrySet()) {
+//            E weight = entry.getValue();
+//            if(minWeight == null || weightManager.compare(weight,minWeight)<0){
+//                minVertex = entry.getKey();
+//                minWeight = weight;
+//            }
+//        }
+//        return minVertex;
+
+        Iterator<Map.Entry<Vertex<V, E>, E>> it = paths.entrySet().iterator();
+        Map.Entry<Vertex<V, E>, E> minEntry = it.next();
+        while(it.hasNext()){
+            Map.Entry<Vertex<V, E>, E> entry = it.next();
+            if(weightManager.compare(entry.getValue(),minEntry.getValue())<0){
+                minEntry = entry;
+            }
+        }
+        return minEntry;
+    }
 }

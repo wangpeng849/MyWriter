@@ -1,6 +1,7 @@
 package com.wangp.myaop.s_graph;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -104,4 +105,6 @@ public abstract class  Graph<V,E> {
       int compare(E w1,E w2);
       E add(E w1,E w2);
    }
+
+   public abstract Map<V,E> shortestPath(V begin);
 }

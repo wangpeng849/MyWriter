@@ -1,6 +1,7 @@
 package com.wangp.myaop.s_graph;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ public class Main {
 
         @Override
         public Double add(Double w1, Double w2) {
-            return null;
+            return w1+w2;
         }
     };
 
@@ -28,7 +29,14 @@ public class Main {
 //        testBfs();
 //        testDfs();
 //        testTopological();
-        testMst();
+//        testMst();
+        testSp();
+    }
+
+    static void testSp(){
+        Graph<Object, Double> graph = undirectedGraph(Data.SP);
+        Map<Object, Double> sp = graph.shortestPath("A");
+        System.out.println(sp);
     }
 
     static void testMst() {
@@ -93,7 +101,7 @@ public class Main {
      * 有向图
      */
     private static Graph<Object, Double> directedGraph(Object[][] data) {
-        Graph<Object, Double> graph = new ListGraph<>();
+        Graph<Object, Double> graph = new ListGraph<>(weightManager);
         for (Object[] edge : data) {
             if (edge.length == 1) {
                 graph.addVertex(edge[0]);
