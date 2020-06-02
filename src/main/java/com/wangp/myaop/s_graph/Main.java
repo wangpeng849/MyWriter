@@ -21,6 +21,13 @@ public class Main {
         public Double add(Double w1, Double w2) {
             return w1+w2;
         }
+
+        @Override
+        public Double zero() {
+            return 0.0;
+        }
+
+
     };
 
     public static void main(String[] args) {
@@ -34,9 +41,11 @@ public class Main {
     }
 
     static void testSp(){
-        Graph<Object, Double> graph = undirectedGraph(Data.SP);
-        Map<Object, Double> sp = graph.shortestPath("A");
-        System.out.println(sp);
+        ListGraph<Object, Double> graph = (ListGraph<Object, Double>) undirectedGraph(Data.SP);
+        Map<Object, Graph.PathInfo<Object, Double>> sp = graph.dijkstra("A");
+        sp.forEach((Object v, Graph.PathInfo <Object,Double> pathInfo)->{
+            System.out.println(v+":"+pathInfo);
+        });
     }
 
     static void testMst() {

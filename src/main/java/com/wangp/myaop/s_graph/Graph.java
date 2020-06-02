@@ -1,5 +1,6 @@
 package com.wangp.myaop.s_graph;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,101 +11,147 @@ import java.util.Set;
  * @Version 1.0
  * 图
  */
-public abstract class  Graph<V,E> {
+public abstract class Graph<V, E> {
 
-   protected WeightManager<E> weightManager;
+    protected WeightManager<E> weightManager;
 
-   public Graph() {
-   }
+    public Graph() {
+    }
 
-   public Graph(WeightManager<E> weightManager) {
-      this.weightManager = weightManager;
-   }
+    public Graph(WeightManager<E> weightManager) {
+        this.weightManager = weightManager;
+    }
 
-   //边的数量
-   public abstract int edgesSize();
-   //顶点数量
-   public abstract int vertices();
+    //边的数量
+    public abstract int edgesSize();
 
-   //添加顶点
-   public abstract void addVertex(V v);
-   //添加边
-   public abstract void addEdge(V from,V to);
-   //添加带权重的边
-   public abstract void addEdge(V from,V to,E weight);
+    //顶点数量
+    public abstract int vertices();
 
+    //添加顶点
+    public abstract void addVertex(V v);
 
-   //删除顶点
-   public abstract void removeVertex(V v);
-   //删除边
-   public abstract void removeEdge(V from,V to);
+    //添加边
+    public abstract void addEdge(V from, V to);
 
-   //遍历 广度优先（层次遍历）
-   public abstract  void bfs(V begin,VertexVisitor<V> visitor);
-
-   //遍历 深度优先
-   public abstract  void dfs(V begin,VertexVisitor<V> visitor);
+    //添加带权重的边
+    public abstract void addEdge(V from, V to, E weight);
 
 
-   //最小生成树
-   public abstract Set<EdgeInfo<V,E>> mst();
+    //删除顶点
+    public abstract void removeVertex(V v);
 
-   public static class EdgeInfo<V,E>{
-      private V from;
-      private V to;
-      private E weight;
+    //删除边
+    public abstract void removeEdge(V from, V to);
 
-      public V getFrom() {
-         return from;
-      }
+    //遍历 广度优先（层次遍历）
+    public abstract void bfs(V begin, VertexVisitor<V> visitor);
 
-      public void setFrom(V from) {
-         this.from = from;
-      }
+    //遍历 深度优先
+    public abstract void dfs(V begin, VertexVisitor<V> visitor);
 
-      public V getTo() {
-         return to;
-      }
 
-      public void setTo(V to) {
-         this.to = to;
-      }
+    //最小生成树
+    public abstract Set<EdgeInfo<V, E>> mst();
 
-      public E getWeight() {
-         return weight;
-      }
+    public static class EdgeInfo<V, E> {
+        private V from;
+        private V to;
+        private E weight;
 
-      public void setWeight(E weight) {
-         this.weight = weight;
-      }
+        public V getFrom() {
+            return from;
+        }
 
-      protected EdgeInfo(V from, V to, E weight) {
-         this.from = from;
-         this.to = to;
-         this.weight = weight;
-      }
+        public void setFrom(V from) {
+            this.from = from;
+        }
 
-      @Override
-      public String toString() {
-         return "EdgeInfo{" +
-                 "from=" + from +
-                 ", to=" + to +
-                 ", weight=" + weight +
-                 '}';
-      }
-   }
+        public V getTo() {
+            return to;
+        }
 
-   public interface VertexVisitor<V>{
-      boolean visit(V v);
-   }
+        public void setTo(V to) {
+            this.to = to;
+        }
 
-   //拓扑排序 (必须是有向五环图)
-   public abstract List<V> topologicalSort();
+        public E getWeight() {
+            return weight;
+        }
 
-   public interface WeightManager<E> {
-      int compare(E w1,E w2);
-      E add(E w1,E w2);
-   }
+        public void setWeight(E weight) {
+            this.weight = weight;
+        }
 
-   public abstract Map<V,E> shortestPath(V begin);
+        protected EdgeInfo(V from, V to, E weight) {
+            this.from = from;
+            this.to = to;
+            this.weight = weight;
+        }
+
+        @Override
+        public String toString() {
+            return "EdgeInfo{" +
+                    "from=" + from +
+                    ", to=" + to +
+                    ", weight=" + weight +
+                    '}';
+        }
+    }
+
+    public interface VertexVisitor<V> {
+        boolean visit(V v);
+    }
+
+    //拓扑排序 (必须是有向五环图)
+    public abstract List<V> topologicalSort();
+
+    public interface WeightManager<E> {
+        int compare(E w1, E w2);
+        E add(E w1, E w2);
+        E zero();
+    }
+
+
+    public abstract Map<V, E> shortestPath(V begin);
+
+    //比上面那个详细
+    public abstract Map<V, PathInfo<V, E>> shortestPaths(V begin);
+
+    public static class PathInfo<V, E> {
+
+        public PathInfo() {
+        }
+
+        public PathInfo(E weight) {
+            this.weight = weight;
+        }
+
+        protected E weight;
+        protected List<EdgeInfo<V, E>> edgeInfos = new LinkedList<>();
+
+        public E getWeight() {
+            return weight;
+        }
+
+        public void setWeight(E weight) {
+            this.weight = weight;
+        }
+
+        public List<EdgeInfo<V, E>> getEdgeInfos() {
+            return edgeInfos;
+        }
+
+        public void setEdgeInfos(List<EdgeInfo<V, E>> edgeInfos) {
+            this.edgeInfos = edgeInfos;
+        }
+
+        @Override
+        public String toString() {
+            return "PathInfo{" +
+                    "weight=" + weight +
+                    ", edgeInfos=" + edgeInfos +
+                    '}';
+        }
+    }
 }
