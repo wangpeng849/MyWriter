@@ -11,29 +11,36 @@ import java.util.Comparator;
  * <p>
  * 二叉堆 (大顶堆)
  */
-public class BinaryHeap<E> implements Heap<E>, BinaryTreeInfo {
+public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     private E[] elements;
-    private int size;
-    private Comparator<E> comparator;
     private static final int DEFAULT_CAPACITY = 10;
 
     public BinaryHeap(Comparator comparator) {
-        this.comparator = comparator;
+        super(comparator);
         this.elements = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     public BinaryHeap() {
-        this(null);
+        this(null, null);
     }
 
-    @Override
-    public int size() {
-        return size;
+    public BinaryHeap(E[] elements, Comparator comparator) {
+        super(comparator);
+        if (elements == null || elements.length == 0) {
+            this.elements = (E[]) new Object[DEFAULT_CAPACITY];
+        } else {
+            size = elements.length;
+            int capacity = Math.max(elements.length,DEFAULT_CAPACITY);
+            this.elements = (E[]) new Object[capacity];
+            for (int i = 0; i < elements.length; i++) {
+                this.elements[i] = elements[i];
+            }
+            heapify();
+        }
     }
 
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
+    public BinaryHeap(E[] elements) {
+        this(elements, null);
     }
 
     @Override
@@ -58,21 +65,35 @@ public class BinaryHeap<E> implements Heap<E>, BinaryTreeInfo {
      * @param index
      */
     private void siftUp(int index) {
+//        E element = elements[index];
+//        while (index > 0) {
+//            //父节点元素
+//            int pindex = (index - 1) >> 1;
+//            E p = elements[pindex];
+//            if (compare(element, p) <= 0) {
+//                return;
+//            }
+//            //交换 element 和 p
+//            E tmp = elements[index];
+//            elements[index] = elements[pindex];
+//            elements[pindex] = tmp;
+//            //重新复制index
+//            index = pindex;
+//        }
         E element = elements[index];
         while (index > 0) {
             //父节点元素
             int pindex = (index - 1) >> 1;
             E p = elements[pindex];
             if (compare(element, p) <= 0) {
-                return;
+                break;
             }
-            //交换 element 和 p
-            E tmp = elements[index];
-            elements[index] = elements[pindex];
-            elements[pindex] = tmp;
+            //将父元素存储在index
+            elements[index] = p;
             //重新复制index
             index = pindex;
         }
+        elements[index] = element;
     }
 
     @Override
@@ -83,18 +104,57 @@ public class BinaryHeap<E> implements Heap<E>, BinaryTreeInfo {
 
     @Override
     public E remove() {
-        return null;
+        emptyCheck();
+        //将0位置备份 并覆盖
+        E root = elements[0];
+        int lastIndex = --size;
+        elements[0] = elements[lastIndex];
+        elements[lastIndex] = null;
+        siftDown(0);
+        return root;
     }
 
+    /**
+     * 下滤
+     *
+     * @param index
+     */
+    private void siftDown(int index) {
+        E element = elements[index];
+        int half = size >> 1;
+        //index非叶子节点  第一个叶子节点的位置==非叶子节点的数量
+        while (index < half) {
+            //默认左子节点 作比较
+            int childIndex = (index << 1) + 1;
+            E child = elements[childIndex];
+            //右子节点
+            int rightIndex = childIndex + 1;
+            //选出左右子节点最大的节点
+            if (rightIndex < size && compare(elements[rightIndex], child) > 0) {
+                child = elements[childIndex = rightIndex];
+            }
+            if (compare(element, child) >= 0) break;
+            //将子节点存放到index位置
+            elements[index] = child;
+            //重新设置index
+            index = childIndex;
+        }
+        elements[index] = element;
+    }
 
     @Override
     public E replace(E element) {
-        return null;
-    }
-
-    public int compare(E e1, E e2) {
-        return comparator != null ? comparator.compare(e1, e2) :
-                ((Comparable<E>) e1).compareTo(e2);
+        elementNotNullCheck(element);
+        E root = null;
+        if (size == 0) {
+            elements[0] = element;
+            size++;
+        } else {
+            root = elements[0];
+            elements[0] = element;
+            siftDown(0);
+        }
+        return root;
     }
 
     private void emptyCheck() {
@@ -121,6 +181,17 @@ public class BinaryHeap<E> implements Heap<E>, BinaryTreeInfo {
         }
     }
 
+    private void heapify(){
+        //自上而下的上滤
+//        for (int i = 0; i < size; i++) {
+//            siftUp(i);
+//        }
+        //自下而上的下滤
+        for (int i = (size >> 1) -1; i >=0; i--) {
+            siftDown(i);
+        }
+    }
+
     @Override
     public Object root() {
         return 0;
@@ -128,21 +199,18 @@ public class BinaryHeap<E> implements Heap<E>, BinaryTreeInfo {
 
     @Override
     public Object left(Object node) {
-        Integer index = (Integer) node;
-        index = index << 1 + 1;
-        return index >= size ? null:index;
+        int index = ((int)node << 1) + 1;
+        return index >= size ? null : index;
     }
 
     @Override
     public Object right(Object node) {
-        Integer index = (Integer) node;
-        index = index << 1 + 2;
-        return index >= size ? null:index;
+        int index = ((int)node << 1) + 2;
+        return index >= size ? null : index;
     }
 
     @Override
     public Object string(Object node) {
-        Integer index = (Integer) node;
-        return elements[index];
+        return elements[(int)node];
     }
 }
