@@ -42,7 +42,7 @@ public class Main {
 
     static void testSp(){
         ListGraph<Object, Double> graph = (ListGraph<Object, Double>) undirectedGraph(Data.SP);
-        Map<Object, Graph.PathInfo<Object, Double>> sp = graph.dijkstra("A");
+        Map<Object, Graph.PathInfo<Object, Double>> sp = graph.shortestPaths("A");
         sp.forEach((Object v, Graph.PathInfo <Object,Double> pathInfo)->{
             System.out.println(v+":"+pathInfo);
         });

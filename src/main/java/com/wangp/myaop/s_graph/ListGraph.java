@@ -445,7 +445,7 @@ public class ListGraph<V, E> extends Graph<V, E> {
         //以前的最短路径 beginVertex到edge.to的最短路径
         //E oldWeight = paths.get(edge.to).weight;  //此处空指针异常  path对象中可能为空  以前在下面 oldWeight == null做判断
         PathInfo<V, E> oldPath = paths.get(edge.to);
-        if (oldPath != null || weightManager.compare(newWeight, oldPath.weight) >= 0) return;
+        if (oldPath != null && weightManager.compare(newWeight, oldPath.weight) >= 0) return;
         if (oldPath == null) {
             oldPath = new PathInfo<>();
             paths.put(edge.to, oldPath);
