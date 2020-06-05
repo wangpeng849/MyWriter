@@ -82,4 +82,30 @@ public class Main {
         }
         return max;
     }
+
+
+    /**
+     * 大数相乘
+     *
+     *      AB
+     *    * CD
+     *  ---------
+     *   AC
+     *        BD
+     *     BC
+     *     AD
+     *
+     *   因为：
+     *   BC + AD = AC + BD - (A-B)(C-D)
+     *   所以：
+     *      AB
+     *    * CD
+     *  ---------
+     *   AC
+     *        BD
+     *     AC
+     *     BD
+     *     (A-B)(C-D)
+     */
+
 }

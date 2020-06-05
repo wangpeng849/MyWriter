@@ -1,11 +1,6 @@
 package com.wangp.myaop.s_algorithm.greedy;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import org.checkerframework.checker.units.qual.C;
-
-import javax.sound.midi.MidiUnavailableException;
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * @Author wangp
@@ -25,8 +20,8 @@ public class CoinChange {
     public void coinChange3(Integer[] faces, int money) {
         Arrays.sort(faces);
         int coins = 0, idx = faces.length - 1;
-        while(idx >= 0){
-            while(money>= faces[idx]){
+        while (idx >= 0) {
+            while (money >= faces[idx]) {
                 money -= faces[idx];
                 coins++;
             }
@@ -64,4 +59,5 @@ public class CoinChange {
         }
         System.out.println(coins);
     }
+
 }
