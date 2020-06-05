@@ -13,12 +13,12 @@ public class Pirate {
         int[] weights = {3, 5, 6, 10, 7, 14, 2, 11};
         Arrays.sort(weights);
         int capacity = 30, weight = 0,count=0;
-        for (int i = 0; i < weights.length; i++) {
-            int newWeight = weight + weights[i];
-            if(newWeight <= capacity){
+        for (int value : weights) {
+            int newWeight = weight + value;
+            if (newWeight <= capacity) {
                 weight = newWeight;
                 count++;
-                System.out.println(weights[i]);
+                System.out.println(value);
             }
         }
         System.out.println("一共选了"+ count +"件古董");

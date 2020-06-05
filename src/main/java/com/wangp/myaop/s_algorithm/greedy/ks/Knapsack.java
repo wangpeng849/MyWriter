@@ -28,19 +28,19 @@ public class Knapsack {
 
         int capacity = 150, weight = 0, value = 0;
         List<Article> articleList = new LinkedList<>();
-        for (int i = 0; i < articles.length; i++) {
-            int newWeight = weight + articles[i].weight;
-            if(newWeight <= capacity){
+        for (Article article : articles) {
+            int newWeight = weight + article.weight;
+            if (newWeight <= capacity) {
                 weight = newWeight;
-                value += articles[i].value;
-                articleList.add(articles[i]);
+                value += article.value;
+                articleList.add(article);
             }
         }
 
         System.out.println("【"+title+"】");
         System.out.println("总价值为:"+value);
-        for (int i = 0; i < articleList.size(); i++) {
-            System.out.println(articleList.get(i));
+        for (Article article : articleList) {
+            System.out.println(article);
         }
         System.out.println("------------------------------");
     }
