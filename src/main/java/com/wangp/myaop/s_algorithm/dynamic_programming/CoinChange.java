@@ -13,7 +13,7 @@ public class CoinChange {
 
     public static void main(String[] args) {
         System.out.println(new CoinChange().coins3(41));
-        System.out.println(new CoinChange().coins5(new int[]{1,5,20,25},19));
+        System.out.println(new CoinChange().coins5(new int[]{5, 20, 25}, 19));
     }
 
     /**
@@ -108,10 +108,14 @@ public class CoinChange {
         for (int i = 1; i <= n; i++) {
             int min = Integer.MAX_VALUE;
             for (int face : faces) {
-                if (i < face) continue;
+                if (i < face || dp[i - face] < 0) continue;
                 min = Math.min(dp[i - face], min);
             }
-            dp[i] = min + 1;
+            if (min == Integer.MAX_VALUE) {
+                dp[i] = -1;
+            } else {
+                dp[i] = min + 1;
+            }
         }
         return dp[n];
     }
