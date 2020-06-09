@@ -16,8 +16,62 @@ public class Knapsack {
         int weight[] = {2, 2, 6, 5, 4};
         int value[] = {6, 3, 5, 4, 6};
         int capacity = 10;
-        System.out.println(maxValue(weight, value, capacity));
+        System.out.println(maxValue_exactly(weight, value, capacity));
     }
+
+    /**
+     *
+     *恰好装满
+     * @param weights
+     * @param values
+     * @param capacity
+     * @return
+     */
+    static int maxValue_exactly(int[] weights, int[] values, int capacity) {
+        if (values == null || values.length == 0) return 0;
+        if (weights == null || weights.length == 0) return 0;
+        if (values.length != weights.length || capacity <= 0) return 0;
+        int[] dp = new int[capacity + 1];
+        for (int i = 0; i <= capacity; i++) {
+            dp[i] = Integer.MIN_VALUE;
+        }
+        for (int i = 1; i <= weights.length; i++) {
+            for (int j = capacity; j >= weights[i - 1]; j--) {
+                if (j < weights[i - 1]) continue;
+                dp[j] = Math.max(
+                        dp[j],
+                        dp[j - weights[i - 1]] + values[i - 1]
+                );
+            }
+        }
+        return dp[capacity] < 0 ? -1 : dp[capacity];
+    }
+
+    /**
+     * 一维数组优化
+     *
+     * @param weights
+     * @param values
+     * @param capacity
+     * @return
+     */
+    static int maxValue_arr(int[] weights, int[] values, int capacity) {
+        if (values == null || values.length == 0) return 0;
+        if (weights == null || weights.length == 0) return 0;
+        if (values.length != weights.length || capacity <= 0) return 0;
+        int[] dp = new int[capacity + 1];
+        for (int i = 1; i <= weights.length; i++) {
+            for (int j = capacity; j >= weights[i - 1]; j--) {
+                if (j < weights[i - 1]) continue;
+                dp[j] = Math.max(
+                        dp[j],
+                        dp[j - weights[i - 1]] + values[i - 1]
+                );
+            }
+        }
+        return dp[capacity];
+    }
+
 
     static int maxValue(int[] weights, int[] values, int capacity) {
         /*
@@ -45,8 +99,8 @@ public class Knapsack {
                     dp[i][j] = dp[i - 1][j];
                 } else {
                     dp[i][j] = Math.max(
-                            dp[i-1][j],
-                            dp[i-1][j-weights[i-1]]+values[i-1]
+                            dp[i - 1][j],
+                            dp[i - 1][j - weights[i - 1]] + values[i - 1]
                     );
                 }
             }
