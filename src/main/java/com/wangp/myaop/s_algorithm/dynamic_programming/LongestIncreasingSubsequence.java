@@ -1,5 +1,7 @@
 package com.wangp.myaop.s_algorithm.dynamic_programming;
 
+import java.util.Arrays;
+
 /**
  * @Author wangp
  * @Date 2020/6/8
@@ -25,7 +27,7 @@ public class LongestIncreasingSubsequence {
     //状态定义：
 
     public static void main(String[] args) {
-        System.out.println(lengthOfLIS(new int[]{10,2,2,5,1,7,101,18}));
+        System.out.println(lengthOfLIS_card_binary_find(new int[]{10, 2, 2, 5, 1, 7, 101, 18}));
     }
 
     static int lengthOfLIS(int[] nums) {
@@ -38,8 +40,102 @@ public class LongestIncreasingSubsequence {
                 if (nums[i] <= nums[j]) continue;
                 dp[i] = Math.max(dp[i], dp[j] + 1);
             }
-            max = Math.max(dp[i],max);
+            max = Math.max(dp[i], max);
         }
         return max;
+    }
+
+
+    /**
+     * 二分优化
+     *
+     * @param nums
+     * @return
+     */
+    static int lengthOfLIS_card_binary_find(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        //牌队的数量
+        int len = 0;
+        //牌定数组
+        int[] top = new int[nums.length];
+        //遍历所有的牌
+        for (int num : nums) {
+            int begin = 0;
+            int end = len;
+            while (begin < end) {
+                int mid = (begin + end) >> 1;
+                if (num <= top[mid]) {
+                    end = mid;
+                } else {
+                    begin = mid + 1;
+                }
+            }
+            //覆盖牌堆
+            top[begin] = num;
+            if (begin == len) len++;
+        }
+        System.out.println(Arrays.toString(top));
+        return len;
+    }
+
+    /**
+     * 二分搜索 (了解)
+     *
+     * @param nums
+     * @return
+     */
+    static int lengthOfLIS_card(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        //牌队的数量
+        int len = 0;
+        //牌定数组
+        int[] top = new int[nums.length];
+        //遍历所有的牌
+        for (int num : nums) {
+            int j = 0;
+            while (j < len) {
+                //找到一个>=num的牌顶
+                if (top[j] >= num) {
+                    top[j] = num;
+                    break;
+                }
+                //牌顶 < num
+                j++;
+            }
+            //新建一个牌堆
+            if (j == len) {
+                len++;
+                top[j] = num;
+            }
+        }
+        System.out.println(Arrays.toString(top));
+        return len;
+    }
+
+    static int lengthOfLIS_mj(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        // 牌堆的数量
+        int len = 0;
+        // 牌顶数组
+        int[] top = new int[nums.length];
+        // 遍历所有的牌
+        for (int num : nums) {
+            int begin = 0;
+            int end = len;
+            while (begin < end) {
+                int mid = (begin + end) >> 1;
+                if (num <= top[mid]) {
+                    end = mid;
+                } else {
+                    begin = mid + 1;
+                }
+            }
+            // 覆盖牌顶
+            top[begin] = num;
+            // 检查是否要新建一个牌堆
+            if (begin == len) len++;
+        }
+        System.out.println(Arrays.toString(top));
+        return len;
     }
 }

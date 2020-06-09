@@ -9,7 +9,7 @@ package com.wangp.myaop.s_algorithm.dynamic_programming;
 public class LongestCommonSubstring {
 
     public static void main(String[] args) {
-        System.out.println(lcs_arr("ABCBA", "BABCD"));
+        System.out.println(lcs_arr("ABCBA", " "));
     }
 
     /**
