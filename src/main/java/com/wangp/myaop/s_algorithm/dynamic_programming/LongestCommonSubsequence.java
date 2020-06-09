@@ -5,7 +5,7 @@ package com.wangp.myaop.s_algorithm.dynamic_programming;
  * @Date 2020/6/8
  * @Version 1.0
  */
-//最长公共子序列 LCS
+//2-最长公共子序列 LCS
 public class LongestCommonSubsequence {
     //[1,3,5,9,10] 和 [1,4,9,10] 的最长公共子序列是 [1,9,10] 长度为3
     // ABCBDAB 和 BDCABA --> BDAB,BCAB,BCBA

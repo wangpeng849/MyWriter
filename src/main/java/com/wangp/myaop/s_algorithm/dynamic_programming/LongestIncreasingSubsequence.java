@@ -6,7 +6,7 @@ package com.wangp.myaop.s_algorithm.dynamic_programming;
  * @Version 1.0
  */
 
-//最长上升子序列 LIS
+//1-最长上升子序列 LIS
 public class LongestIncreasingSubsequence {
     //给定一个无序的整数序列 求出它最长上升子序列的长度 （严格上升）
     //[10,2,2,5,1,7,101,18] 的最长上升子序列是 [2,5,7,101],[2,5,7,18] 长度是4
