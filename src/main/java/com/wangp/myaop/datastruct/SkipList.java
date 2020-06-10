@@ -1,7 +1,5 @@
 package com.wangp.myaop.datastruct;
 
-import com.sun.deploy.net.proxy.pac.PACFunctions;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
