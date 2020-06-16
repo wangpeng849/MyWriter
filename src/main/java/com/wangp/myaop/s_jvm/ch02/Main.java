@@ -65,5 +65,9 @@ public class Main {
                 重新标记 ： 短暂
                 并发清除 ： 和用户的应用程序同时进行
                 -XX:+UseConcMarkSweepGC 新生代使用ParNew  老年代使用CMS
+
+
+            G1 垃圾回收
+                -XX:+UseG1GC
      */
 }
