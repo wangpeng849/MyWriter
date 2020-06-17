@@ -594,6 +594,7 @@ public class Solution {
 
     /**
      * 打家劫舍
+     *
      * @param nums
      * @return
      */
@@ -614,6 +615,20 @@ public class Solution {
         return dp[length - 1];
     }
 
+    /**
+     * 使用最小花费爬楼梯
+     * @param cost
+     */
+    public int minCostClimbingStairs(int[] cost) {
+        int[] dp = new int[cost.length];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for (int i = 2; i < cost.length; i++) {
+            dp[i] = cost[i] + Math.min(dp[i - 1], dp[i - 2]);
+        }
+        return Math.min(dp[cost.length - 1], dp[cost.length - 2]);
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        树模拟数据
@@ -630,7 +645,7 @@ public class Solution {
 //        root.setRight(node1);
 //        node4.setRight(node6);
 //        node6.setLeft(node5);
-        solution.rob(new int[]{1,2,3,1});
+        solution.rob(new int[]{1, 2, 3, 1});
     }
 
 

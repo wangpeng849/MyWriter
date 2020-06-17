@@ -68,6 +68,29 @@ public class Main {
 
 
             G1 垃圾回收
-                -XX:+UseG1GC
+                -XX:+UseG1GC  分带收集，空间整合，整体上看是：标记-整理；局部看：复制算法 没有空间碎片，可预测停顿
+
+
+
+        内存分配与回收策略
+            1.对象有限在Eden分配，如果Eden内存不足，就会发生Minor GC
+            2.大对象直接进入老年代，大对象：很长的字符串和大型数组，1.导致内存有空间，提前垃圾回收来放他们 2.进行大量的内存复制
+                  -XX:PretenureSizeThreshold参数 大于直接在老年代分配 默认为0 0为任何对象都不在老年代分配
+            3.长期存活的对象将进入老年代，默认15岁，-XX:MaxTenuringThreshold
+            4.动态对象年龄判定
+            5.空间分配担保：大量的对象存活，survival空间不够，只要老年代的连续空间大于新生代对象的总大小或者历次晋升的平均大小，进行MinorGC，否则FullGC
+
+        新生代配置:
+            优先级
+            高：-XX:NewSize/MaxNewSize
+            中（常用）：-Xmn    （NewSize=MaxNewSize)
+            低：-XX:NewRatio 表示新生代和老年代比例   SurvivorRatio=2 --> Eden:FromS:ToS = 8:1:1  NewRatio = 2 --> 新生代与老年代比例为 1比2
+
+
+
+        内存泄漏和内存溢出辨析
+            相同：
+            不同：
+
      */
 }
