@@ -2,13 +2,8 @@ package com.wangp.myaop.leetcode;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
-import org.thymeleaf.model.IStandaloneElementTag;
 
-import javax.management.Query;
-import java.io.File;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * @Author wangp
@@ -542,9 +537,9 @@ public class Solution {
                 tmp_min = tmp_min ^ tmp_max;
                 tmp_max = tmp_min ^ tmp_max;
             }
-            tmp_max = tmp_max > nums[i] ? tmp_max : nums[i];
-            tmp_min = tmp_min < nums[i] ? tmp_min : nums[i];
-            max = tmp_max > max ? tmp_max : max;
+            tmp_max = Math.max(tmp_max, nums[i]);
+            tmp_min = Math.min(tmp_min, nums[i]);
+            max = Math.max(tmp_max, max);
         }
         return max;
     }
@@ -617,6 +612,7 @@ public class Solution {
 
     /**
      * 使用最小花费爬楼梯
+     *
      * @param cost
      */
     public int minCostClimbingStairs(int[] cost) {
@@ -628,6 +624,40 @@ public class Solution {
         }
         return Math.min(dp[cost.length - 1], dp[cost.length - 2]);
     }
+
+    /**
+     * 二进制相加
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+//    public String addBinary(String a, String b) {
+//        int anum = 0;
+//        int bnum = 0;
+//        int count = 0;
+//        for (int i =  a.length() -1 ; i >= 0; i--) {
+//            if(a.charAt(i) == '1') {
+//                anum += (int) Math.pow(2, count);
+//            }
+//            count++;
+//        }
+//        count = 0;
+//        for (int i =  b.length() -1 ; i >= 0; i--) {
+//            if(b.charAt(i) == '1') {
+//                bnum += (int) Math.pow(2,count);
+//            }
+//            count++;
+//        }
+//        return Integer.toBinaryString(anum+bnum);
+//    }
+    public String addBinary(String a, String b) {
+        return Integer.toBinaryString(
+                Integer.parseInt(a, 2) + Integer.parseInt(b, 2)
+        );
+    }
+
+
 
     public static void main(String[] args) {
         Solution solution = new Solution();
@@ -645,8 +675,11 @@ public class Solution {
 //        root.setRight(node1);
 //        node4.setRight(node6);
 //        node6.setLeft(node5);
-        solution.rob(new int[]{1, 2, 3, 1});
+//        solution.rob(new int[]{1, 2, 3, 1});
+        String s = solution.addBinary("10", "111");
+        System.out.println(s);
     }
+
 
 
     public void preOrderTree(TreeNode root) {
