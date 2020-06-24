@@ -37,6 +37,7 @@ public class DOM4JReadDemo {
                         System.out.println("属性: "+c.getName() + " = " + c.getValue());
                     }
                 }
+                System.out.println("----------------------");
             }
         } catch (Exception e) {
             e.printStackTrace();
