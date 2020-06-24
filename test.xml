@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <book name="三国演义">
+        <!-- SAX 能读取 name="value" -->
+        <title name="value">Title</title>
+        <author>author</author>
+        <price>20</price>
+    </book>
+    <book>
+        <title>Title2</title>
+        <author>author2</author>
+        <price>20</price>
+    </book>
+    <book>
+        <title>Title3</title>
+        <author>author3</author>
+        <price>40</price>
+        <more more="更多内容">...</more>
+    </book>
+</root>
