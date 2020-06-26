@@ -99,24 +99,30 @@ public class DOM4JOperation extends XmlOperation {
         }
     }
 
-    public void printElement(Element element){
-        System.out.println("节点："+element.getName());
+    String format = "";
+
+    public void printElement(Element element) {
+        System.out.println(format + "节点：" + element.getName());
         List<Attribute> attributes = element.attributes();
-        System.out.println("文本值："+element.getText().trim());
-        System.out.println("属性Key-value：");
+        System.out.println(format + "文本值：" + element.getText().trim());
+        System.out.print(format + "属性Key-value：");
         for (Attribute attribute : attributes) {
-            System.out.println(attribute.getName() + "-" + attribute.getValue());
+            System.out.print(attribute.getName() + "-" + attribute.getValue() + "\t");
         }
-        System.out.println(element.getName()+"的子节点：\n[");
+        System.out.println("");
+        System.out.println(format + element.getName() + "的子节点：\n" + format + "[");
         Iterator it = element.elementIterator();
-        if(!it.hasNext()) {
-            System.out.println("None");
-            System.out.println("]");
+        if (!it.hasNext()) {
+            System.out.println(format + "None");
+            System.out.println(format + "]");
+            if(format.length()>3) format = format.substring(0, format.length() - 4);
             return;
         }
-        while(it.hasNext()){
+        while (it.hasNext()) {
+            format += "    ";
             printElement((Element) it.next());
         }
-        System.out.println("]");
+        System.out.println(format + "]");
+        if(format.length()>3) format = format.substring(0, format.length() - 4);
     }
 }

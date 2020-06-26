@@ -13,8 +13,8 @@
     </book>
     <book>
         <title>Title3</title>
-        <author>author3</author>
-        <price>40</price>
+        <author author="罗贯中">author3</author>
+        <price desc="便宜" details="爆款">40</price>
         <more moreAttribute="更多内容">...</more>
     </book>
 </root>
