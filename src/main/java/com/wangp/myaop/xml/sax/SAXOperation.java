@@ -1,6 +1,6 @@
 package com.wangp.myaop.xml.sax;
 
-import com.sun.org.apache.xml.internal.resolver.readers.SAXParserHandler;
+import com.wangp.myaop.xml.XmlOperation;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -10,15 +10,27 @@ import javax.xml.parsers.SAXParserFactory;
  * @Date 2020/6/24
  * @Version 1.0
  */
-public class SAXReadDemo {
-    public static void main(String[] args) {
+public class SAXOperation extends XmlOperation {
+
+
+    public SAXOperation(String filePath) {
+        super(filePath);
+    }
+
+    @Override
+    public void readXml() {
         SAXParserFactory spf = SAXParserFactory.newInstance();
-        try{
+        try {
             SAXParser saxParser = spf.newSAXParser();
             SAXParseHandler handler = new SAXParseHandler();
-            saxParser.parse("./test.xml",handler);
-        }catch (Exception e){
+            saxParser.parse(filePath, handler);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void writeXml() {
+
     }
 }

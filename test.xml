@@ -15,6 +15,6 @@
         <title>Title3</title>
         <author>author3</author>
         <price>40</price>
-        <more more="更多内容">...</more>
+        <more moreAttribute="更多内容">...</more>
     </book>
 </root>

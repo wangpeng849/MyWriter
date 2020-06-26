@@ -1,5 +1,7 @@
 package com.wangp.myaop.xml.dom;
 
+import com.wangp.myaop.xml.XmlOperation;
+import com.wangp.myaop.xml.part1.XmlOperator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,13 +15,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @Date 2020/6/24
  * @Version 1.0
  */
-public class DOMReadDemo {
+public class DOMOperation extends XmlOperation {
 
-    public static void main(String[] args) {
+    public DOMOperation(String filePath) {
+        super(filePath);
+    }
+
+    @Override
+    public void readXml() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse("./test.xml");
+            Document document = db.parse(filePath);
             NodeList bookList = document.getElementsByTagName("book");
             for (int i = 0; i < bookList.getLength(); i++) {
                 System.out.println("第 " + (i + 1) + " 本书");
@@ -27,7 +34,7 @@ public class DOMReadDemo {
                 NodeList childNodes = element.getChildNodes();
                 for (int j = 0; j < childNodes.getLength(); j++) {
                     Node item = childNodes.item(j);
-                    if(item.getNodeName() != "#text"){
+                    if(!item.getNodeName().equals("#text")){
                         System.out.println(item.getNodeName() + ":" + item.getTextContent());
                     }
                 }
@@ -36,5 +43,10 @@ public class DOMReadDemo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void writeXml() {
+
     }
 }
