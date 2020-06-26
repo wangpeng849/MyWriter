@@ -116,7 +116,7 @@ public class DOM4JOperation extends XmlOperation {
      *
      * @return
      */
-    public XmlData readXMLData() {
+    public  XmlData readXMLData() {
         SAXReader saxReader = new SAXReader();
         XmlData xmlData = null;
         try {
@@ -130,7 +130,7 @@ public class DOM4JOperation extends XmlOperation {
         return xmlData;
     }
 
-    public XmlData acquireXmlData(Element root) {
+    public   XmlData acquireXmlData(Element root) {
         XmlData xmlData = new XmlData();
         xmlData.setNodeName(root.getName());
         xmlData.setText(root.getText().trim());
@@ -154,7 +154,7 @@ public class DOM4JOperation extends XmlOperation {
      *
      * @param xmlData
      */
-    private void writeXMLData(XmlData xmlData,Element root) {
+    private  void writeXMLData(XmlData xmlData,Element root) {
         if (root == null) return;
         try {
             root.addText(xmlData.getText());
@@ -170,7 +170,7 @@ public class DOM4JOperation extends XmlOperation {
             e.printStackTrace();
         }
     }
-    public void writeXMLData(XmlData xmlData, String fileName) {
+    public  void writeXMLData(XmlData xmlData, String fileName) {
         if (fileName == null || fileName.length() == 0) throw new NullPointerException("fileName is empty");
         if (!fileName.endsWith(".xml")) fileName += ".xml";
         //1.创建document
@@ -195,12 +195,12 @@ public class DOM4JOperation extends XmlOperation {
 
 
 
-    public static void main(String[] args){
-        DOM4JOperation dom4JOperation = new DOM4JOperation("./test.xml");
-        XmlData xmlData = dom4JOperation.readXMLData();
-
-        dom4JOperation.writeXMLData(xmlData,"test_write.xml");
-    }
+//    public static void main(String[] args){
+//        DOM4JOperation dom4JOperation = new DOM4JOperation("./test.xml");
+//        XmlData xmlData = dom4JOperation.readXMLData();
+//
+//        dom4JOperation.writeXMLData(xmlData,"test_write.xml");
+//    }
 
     public  String jsonToPrettyXml(JSONObject json) throws IOException, SAXException {
         Document document = json2Document(json);
