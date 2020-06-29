@@ -5,6 +5,9 @@ import lombok.Data;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 封装Xml数据
+ */
 @Data
 public class XmlData {
     private String nodeName;

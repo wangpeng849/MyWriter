@@ -1,5 +1,8 @@
 package com.wangp.myaop.xml.jaxb;
 
+import com.google.common.collect.Lists;
+import com.wangp.myaop.xml.aggregation.JAXBOperator;
+
 import javax.xml.bind.*;
 import java.io.*;
 
@@ -103,7 +106,12 @@ public class XMLUtils {
 
 //        Object o = convertXmlStrToObject(Student.class, zhangsan);
 //        System.out.println(o);
-        Object o = convertXmlFileToObject(Student.class, "./generateXml.xml");
-        System.out.println(o);
+//        Object o = convertXmlFileToObject(Student.class, "./generateXml.xml");
+//        System.out.println(o);
+
+        String s = convertToXML(new JAXBOperator().setObj(new Student()
+                .setName(new Student.Name().setFrom("From").setTo("To").setValue("张三")).setAge(12).setSalary(10))
+                .setOperator(new JAXBOperator.Operator().setAdd("open").setSub("close")));
+        System.out.println(s);
     }
 }
