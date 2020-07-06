@@ -657,7 +657,106 @@ public class Solution {
         );
     }
 
+    class CQueue {
+        Stack<Integer> inStack;
+        Stack<Integer> outStack;
 
+        public CQueue() {
+            inStack = new Stack();
+            outStack = new Stack();
+        }
+
+        public void appendTail(int value) {
+            inStack.push(value);
+        }
+
+        public int deleteHead() {
+            if (outStack.isEmpty()) {
+                while (!inStack.isEmpty()) {
+                    outStack.push(inStack.pop());
+                }
+            }
+            if (outStack.isEmpty()) {
+                return -1;
+            } else {
+                int deleteItem = outStack.pop();
+                return deleteItem;
+            }
+        }
+    }
+
+    /**
+     * 不同路劲 I
+     *
+     * @param m
+     * @param n
+     * @return
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            dp[0][i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
+
+    public int uniquePathsImprove(int m, int n) {
+        int[] curLine = new int[n];
+        int[] preLine = new int[n];
+
+        Arrays.fill(curLine, 1);
+        Arrays.fill(preLine, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                curLine[j] = preLine[j] + curLine[j - 1];
+            }
+            preLine = curLine.clone();
+        }
+        return curLine[n - 1];
+    }
+
+    public int uniquePathsImproveImporve(int m, int n) {
+        int[] arr = new int[n];
+        Arrays.fill(arr, 1);
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                arr[j] += arr[j - 1];
+            }
+        }
+        return arr[n - 1];
+    }
+
+    /**
+     * 不同路劲 II  有障碍物
+     *
+     * @return
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int n = obstacleGrid.length, m = obstacleGrid[0].length;
+        int[] arr = new int[m];
+
+        arr[0] = obstacleGrid[0][0] == 1 ? 0 : 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+               if(obstacleGrid[i][j] == 1) {
+                    arr[j] = 0;
+                    continue;
+               }
+               if(j-1 >= 0 && obstacleGrid[i][j-1] == 0){
+                   arr[j] += arr[j-1];
+               }
+            }
+        }
+        return arr[m - 1];
+    }
 
     public static void main(String[] args) {
         Solution solution = new Solution();
@@ -675,11 +774,11 @@ public class Solution {
 //        root.setRight(node1);
 //        node4.setRight(node6);
 //        node6.setLeft(node5);
-//        solution.rob(new int[]{1, 2, 3, 1});
-        String s = solution.addBinary("10", "111");
-        System.out.println(s);
+        int i = solution.uniquePathsWithObstacles(new int[][]{
+                {1, 0},
+        });
+        System.out.println(i);
     }
-
 
 
     public void preOrderTree(TreeNode root) {
