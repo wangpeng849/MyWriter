@@ -37,6 +37,8 @@ public class TreeMapTest {
         treeMap.put(user4,1);
         System.out.println(treeMap);
 
+        User user = treeMap.lastKey();
+        System.out.println(user);
         //User 必须实现Comparable接口
         //否则 报错com.wangp.myaop.datastruct.TreeMapTest$User cannot be cast to java.lang.Comparable
     }

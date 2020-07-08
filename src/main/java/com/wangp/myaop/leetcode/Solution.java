@@ -746,38 +746,71 @@ public class Solution {
         arr[0] = obstacleGrid[0][0] == 1 ? 0 : 1;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-               if(obstacleGrid[i][j] == 1) {
+                if (obstacleGrid[i][j] == 1) {
                     arr[j] = 0;
                     continue;
-               }
-               if(j-1 >= 0 && obstacleGrid[i][j-1] == 0){
-                   arr[j] += arr[j-1];
-               }
+                }
+                if (j - 1 >= 0 && obstacleGrid[i][j - 1] == 0) {
+                    arr[j] += arr[j - 1];
+                }
             }
         }
         return arr[m - 1];
     }
 
+    /**
+     * 路径总和
+     *
+     * @param root
+     * @param sum
+     * @return
+     */
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) return false;
+        if (root.left == null && root.right == null) return sum == root.val;
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+
+    /**
+     * 跳水板
+     *
+     * @param shorter
+     * @param longer
+     * @param k
+     * @return
+     */
+    public int[] divingBoard(int shorter, int longer, int k) {
+        if (k < 1) return new int[]{};
+        if (shorter == longer) return new int[]{shorter * k};
+        int[] lens = new int[k + 1];
+        for (int i = 0; i <= k; i++) {
+            lens[i] = shorter * (k - i) + longer * i;
+        }
+        return lens;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        树模拟数据
-//        TreeNode root = new TreeNode(0);
-//        TreeNode node1 = new TreeNode(1);
-//        TreeNode node2 = new TreeNode(2);
-//        TreeNode node3 = new TreeNode(3);
-//        TreeNode node4 = new TreeNode(4);
-//        TreeNode node5 = new TreeNode(5);
-//        TreeNode node6 = new TreeNode(6);
-//        node3.setLeft(node2);
-//        node3.setRight(node4);
-//        node2.setLeft(root);
-//        root.setRight(node1);
-//        node4.setRight(node6);
-//        node6.setLeft(node5);
-        int i = solution.uniquePathsWithObstacles(new int[][]{
-                {1, 0},
-        });
-        System.out.println(i);
+//        TreeNode root = new TreeNode(5);
+//        TreeNode node1 = new TreeNode(4);
+//        TreeNode node2 = new TreeNode(8);
+//        TreeNode node3 = new TreeNode(11);
+//        TreeNode node4 = new TreeNode(13);
+//        TreeNode node5 = new TreeNode(4);
+//        TreeNode node6 = new TreeNode(7);
+//        TreeNode node7 = new TreeNode(2);
+//        TreeNode node8 = new TreeNode(1);
+//        root.setLeft(node1);
+//        root.setRight(node2);
+//        node1.setLeft(node3);
+//        node2.setLeft(node4);
+//        node2.setRight(node5);
+//        node3.setLeft(node6);
+//        node3.setRight(node7);
+//        node4.setRight(node8);
+        int[] ints = solution.divingBoard(2, 6, 6);
+        System.out.println(Arrays.toString(ints));
     }
 
 
