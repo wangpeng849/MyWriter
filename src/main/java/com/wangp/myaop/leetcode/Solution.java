@@ -789,6 +789,43 @@ public class Solution {
         return lens;
     }
 
+    /**
+     * 恢复空格
+     *
+     * @param dictionary
+     * @param sentence
+     * @return
+     */
+    public int respace(String[] dictionary, String sentence) {
+        int n = sentence.length();
+        List<String> dicList = Arrays.asList(dictionary);
+        int[] dp = new int[n + 1];
+        for (int i = 1; i < n; i++) {
+            dp[i] = dp[i-1] + 1;
+            for (int j = 0; j < i; j++) {
+                if (dicList.contains(sentence.substring(j, i))) {
+                    dp[i] =Math.min(dp[i],dp[j]);
+                }
+            }
+        }
+        return dp[n];
+
+        //动态规划
+//            int n = sentence.length();
+//            int m = dictionary.length;
+//            int[] dp = new int[n + 1];
+//            for (int i = 1; i <= n; i++) {
+//                dp[i] = dp[i-1];
+//                for (int j = 0; j < m ; j++) {
+//                    if (i < dictionary[j].length()) continue;
+//                    if (sentence.substring(i - dictionary[j].length(), i).equals(dictionary[j])) {
+//                        dp[i] = Math.max(dp[i - dictionary[j].length()] + dictionary[j].length(), dp[i]);
+//                    }
+//                }
+//            }
+//            return n - dp[n];
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        树模拟数据
@@ -809,8 +846,7 @@ public class Solution {
 //        node3.setLeft(node6);
 //        node3.setRight(node7);
 //        node4.setRight(node8);
-        int[] ints = solution.divingBoard(2, 6, 6);
-        System.out.println(Arrays.toString(ints));
+        System.out.println(solution.respace(new String[]{"a", "abc", "bcd", "bd", "abcde", "rk", "k", "b"}, "abcde"));
     }
 
 

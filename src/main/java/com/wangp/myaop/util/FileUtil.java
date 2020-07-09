@@ -65,9 +65,24 @@ public class FileUtil {
         }
     }
 
+    /**
+     *  修改文件名
+     */
+    public static void modifyName(File file){
+        if(file.isDirectory()){
+            File[] files = file.listFiles();
+            for (File f : files) {
+                modifyName(f);
+            }
+        }
+        if(file.getName().startsWith("课堂笔记")){
+            System.out.println(file.getName());
+            file.renameTo(new File("./"+file.getParentFile().getName()+"-"+file.getName()));
+        }
+    }
+
     public static void main(String[] args) {
-        File file = new File("C:\\Users\\wangp\\Desktop\\2019菁干班日报");
-        deleteFileByNotContainsName(file, Arrays.asList("week"));
-        deleteBlankDirectory(file);
+        File file = new File("D:\\03.框架应用和源码专题(三)");
+        modifyName(file);
     }
 }
