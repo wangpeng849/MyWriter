@@ -2,6 +2,7 @@ package com.wangp.myaop.leetcode;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -801,10 +802,10 @@ public class Solution {
         List<String> dicList = Arrays.asList(dictionary);
         int[] dp = new int[n + 1];
         for (int i = 1; i < n; i++) {
-            dp[i] = dp[i-1] + 1;
+            dp[i] = dp[i - 1] + 1;
             for (int j = 0; j < i; j++) {
                 if (dicList.contains(sentence.substring(j, i))) {
-                    dp[i] =Math.min(dp[i],dp[j]);
+                    dp[i] = Math.min(dp[i], dp[j]);
                 }
             }
         }
@@ -824,6 +825,52 @@ public class Solution {
 //                }
 //            }
 //            return n - dp[n];
+    }
+
+    /**
+     * 数组交集
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int[] res = new int[Math.min(nums1.length, nums2.length)];
+        int index1 = 0, index2 = 0, index = 0;
+        while (index1 < nums1.length && index2 < nums2.length) {
+            if (nums1[index1] < nums2[index2]) {
+                index1++;
+            } else if (nums1[index1] > nums2[index2]) {
+                index2++;
+            } else {
+                res[index] = nums1[index1];
+                index++;
+                index1++;
+                index2++;
+            }
+        }
+        return Arrays.copyOfRange(res, 0, index);
+    }
+
+    /**
+     * 三角形最小边
+     *
+     * @param triangle
+     * @return
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if (triangle == null || triangle.size() == 0 || triangle.get(0) == null) return 0;
+        int[] dp = new int[triangle.size()];
+        dp[0] = triangle.get(0).get(0);
+        for (int i = 1; i < triangle.size(); i++) {
+            dp[i] = Integer.MAX_VALUE;
+            for (Integer sub : triangle.get(i)) {
+                dp[i] = Math.min(dp[i], dp[i - 1] + sub);
+            }
+        }
+        return dp[triangle.size() - 1];
     }
 
     public static void main(String[] args) {
@@ -846,7 +893,7 @@ public class Solution {
 //        node3.setLeft(node6);
 //        node3.setRight(node7);
 //        node4.setRight(node8);
-        System.out.println(solution.respace(new String[]{"a", "abc", "bcd", "bd", "abcde", "rk", "k", "b"}, "abcde"));
+        System.out.println(solution.minimumTotal(Arrays.asList(Arrays.asList(2), Arrays.asList(3, 4), Arrays.asList(6, 5, 7), Arrays.asList(4, 1, 8, 3))));
     }
 
 

@@ -1,8 +1,10 @@
 package com.wangp.myaop.datastruct;
 
+import com.google.common.collect.Maps;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -41,5 +43,16 @@ public class TreeMapTest {
         System.out.println(user);
         //User 必须实现Comparable接口
         //否则 报错com.wangp.myaop.datastruct.TreeMapTest$User cannot be cast to java.lang.Comparable
+
+
+        System.out.println("HashMap插入null测试");
+        Map map = Maps.newHashMap();
+        map.put(null,null);
+        System.out.println(map.get(null));
+
+        map.put("null",2);
+        System.out.println(map.get(null));
+        System.out.println(map.get("null"));
+
     }
 }
