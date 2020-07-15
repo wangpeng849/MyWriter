@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangp.myaop.xuyu.XuyuMapper">
+
+    <resultMap id="xuyuEntity" type="com.wangp.myaop.xuyu.Xuyu">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="work_unit" property="workUnit" jdbcType="VARCHAR"/>
+        <result column="control_project" property="controlProject" jdbcType="VARCHAR"/>
+
+        <collection property="xuyu2List" ofType="com.wangp.myaop.xuyu.Xuyu2">
+            <result column="inspection_order" property="inspectionOrder"/>
+            <result column="cause_by" property="causeBy"/>
+            <result column="remedial_adjust_measures" property="remedialAdjustMeasures"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="operator" property="operator"/>
+        </collection>
+    </resultMap>
+
+    <select id="query" resultMap="xuyuEntity">
+        SELECT
+            t1.*, t2.*
+        FROM
+            `t_newException1` t1
+        LEFT JOIN (SELECT * FROM t_newException2) t2 ON t1.id = t2.id;
+    </select>
+
+    <insert id="insertXuyu" parameterType="com.wangp.myaop.xuyu.Xuyu">
+       insert into `t_newException1` (id,company,work_unit,control_project) VALUES (#{xuyu.id},#{xuyu.company},#{xuyu.workUnit},#{xuyu.controlProject});
+    </insert>
+
+    <insert id="insertXuyu2" parameterType="com.wangp.myaop.xuyu.Xuyu2">
+        insert into `t_newException2` (id,inspection_order,cause_by,remedial_adjustment_measures,update_time,operator) values
+        <foreach collection="xuyu2List" item="item" open=" " close=" " separator=",">
+            (
+            #{id},
+            #{item.inspectionOrder},
+            #{item.causeBy},
+            #{item.remedialAdjustMeasures},
+            #{item.updateTime},
+            #{item.operator}
+            )
+        </foreach>
+    </insert>
+</mapper>
+
+

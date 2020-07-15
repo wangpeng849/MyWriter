@@ -21,14 +21,14 @@ import java.time.LocalDateTime;
 @EnableScheduling
 public class DynamicScheduleTask implements SchedulingConfigurer {
 
-    @Mapper
-    public interface CronMapper {
-        @Select("select cron from cron limit 1")
-        String getCron();
-    }
-
-    @Autowired
-    private CronMapper cronMapper;
+//    @Mapper
+//    public interface CronMapper {
+//        @Select("select cron from cron limit 1")
+//        String getCron();
+//    }
+//
+//    @Autowired
+//    private CronMapper cronMapper;
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
