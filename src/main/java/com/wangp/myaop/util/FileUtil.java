@@ -81,8 +81,27 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 后缀删除文件
+     * @param file
+     * @param suffix
+     */
+    public static void deleteFileBySuffix(File file,String suffix){
+        if(file.isDirectory()){
+            File[] files = file.listFiles();
+            if(files==null) return;
+            for (File f : files) {
+                deleteFileBySuffix(f,suffix);
+            }
+        }
+        if(file.getName().endsWith(suffix)){
+            System.out.println(file.getName());
+            file.delete();
+        }
+    }
+
     public static void main(String[] args) {
-        File file = new File("D:\\03.框架应用和源码专题(三)");
-        modifyName(file);
+        File file = new File("D:\\");
+        deleteFileBySuffix(file,"downloading");
     }
 }
