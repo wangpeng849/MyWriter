@@ -1,11 +1,8 @@
 package com.wangp.myaop.xml.dom4j;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wangp.myaop.xml.XmlData;
 import com.wangp.myaop.xml.XmlOperation;
-import jdk.internal.org.xml.sax.SAXException;
-import lombok.Data;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -13,7 +10,7 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-import org.quartz.xml.XMLSchedulingDataProcessor;
+import org.xml.sax.SAXException;
 
 import java.io.*;
 import java.util.*;

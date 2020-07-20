@@ -1,8 +1,5 @@
 package com.wangp.myaop.designpattern.create.danli.type1;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
-import org.apache.commons.math3.analysis.function.Sin;
-
 /**
  * @author farling-wangp
  * @version 1.0

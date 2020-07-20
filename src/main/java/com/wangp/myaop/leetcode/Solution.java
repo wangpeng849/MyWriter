@@ -2,6 +2,7 @@ package com.wangp.myaop.leetcode;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -873,6 +874,45 @@ public class Solution {
         return dp[triangle.size() - 1];
     }
 
+    /**
+     * 判断子序列
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        int count = 0, index = 0;
+        for (; index < s.length() && count < t.length(); index++) {
+            for (; count < t.length(); count++) {
+                if (s.charAt(index) == t.charAt(count)) {
+                    break;
+                }
+            }
+        }
+        if (index + 1 == s.length()) return true;
+        return false;
+    }
+
+    /**
+     * 股票最佳时机
+     *
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        int min = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for (int price : prices) {
+            if (price < min) {
+                min = price;
+            } else {
+                maxProfit = Math.max(price - min,maxProfit);
+            }
+        }
+        return maxProfit;
+    }
+
     public static void main(String[] args) {
         Solution solution = new Solution();
 //        树模拟数据
@@ -893,10 +933,7 @@ public class Solution {
 //        node3.setLeft(node6);
 //        node3.setRight(node7);
 //        node4.setRight(node8);
-
-        System.out.println(solution.minimumTotal(Arrays.asList(Arrays.asList(2), Arrays.asList(3, 4), Arrays.asList(6, 5, 7), Arrays.asList(4, 1, 8, 3))));
     }
-
 
     public void preOrderTree(TreeNode root) {
         if (root != null) {
