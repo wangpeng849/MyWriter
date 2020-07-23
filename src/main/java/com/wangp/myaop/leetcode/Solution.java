@@ -725,7 +725,7 @@ public class Solution {
         return curLine[n - 1];
     }
 
-    public int uniquePathsImproveImporve(int m, int n) {
+    public int uniquePathsImproveImprove(int m, int n) {
         int[] arr = new int[n];
         Arrays.fill(arr, 1);
         for (int i = 1; i < m; i++) {
@@ -875,26 +875,6 @@ public class Solution {
     }
 
     /**
-     * 判断子序列
-     *
-     * @param s
-     * @param t
-     * @return
-     */
-    public boolean isSubsequence(String s, String t) {
-        int count = 0, index = 0;
-        for (; index < s.length() && count < t.length(); index++) {
-            for (; count < t.length(); count++) {
-                if (s.charAt(index) == t.charAt(count)) {
-                    break;
-                }
-            }
-        }
-        if (index + 1 == s.length()) return true;
-        return false;
-    }
-
-    /**
      * 股票最佳时机
      *
      * @param prices
@@ -907,10 +887,84 @@ public class Solution {
             if (price < min) {
                 min = price;
             } else {
-                maxProfit = Math.max(price - min,maxProfit);
+                maxProfit = Math.max(price - min, maxProfit);
             }
         }
         return maxProfit;
+    }
+
+    /**
+     * 三步问题
+     *
+     * @param n
+     * @return
+     */
+    public int waysToStep(int n) {
+        long[] dp = new long[n + 1];
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 4;
+        if (n < 4) return (int) dp[n];
+        for (int i = 4; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2] + dp[i - 3]) % 1000000007;
+        }
+        return (int) dp[n];
+    }
+
+    /**
+     * 按摩师
+     *
+     * @param nums
+     * @return
+     */
+    public int massage(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        if (nums.length == 2) return Math.max(nums[0], nums[1]);
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+        }
+        return dp[nums.length - 1];
+    }
+
+    public int massageImprove(int[] nums) {
+        int a = 0, b = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int c = b;
+            b = Math.max(a + nums[i], b);
+            a = c;
+        }
+        return b;
+    }
+
+    public int maxSubArray(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int max = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(nums[i],dp[i-1] + nums[i]);
+            max = Math.max(max,dp[i]);
+        }
+        return max;
+    }
+
+    /**
+     * 判断子序列
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        int i = 0;
+        for (char c : s.toCharArray()) {
+            while (i < t.length() && t.charAt(i) != c) i++;
+            i++;
+        }
+        return i <=t.length();
     }
 
     public static void main(String[] args) {
@@ -933,6 +987,7 @@ public class Solution {
 //        node3.setLeft(node6);
 //        node3.setRight(node7);
 //        node4.setRight(node8);
+        System.out.println(solution.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
     }
 
     public void preOrderTree(TreeNode root) {
