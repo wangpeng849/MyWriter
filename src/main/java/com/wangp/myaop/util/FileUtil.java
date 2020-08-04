@@ -1,7 +1,11 @@
 package com.wangp.myaop.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.util.Arrays;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,6 +17,7 @@ public class FileUtil {
 
     /**
      * 刪除除關鍵詞外的文件
+     *
      * @param file
      * @param names
      */
@@ -33,6 +38,7 @@ public class FileUtil {
 
     /**
      * 判斷文件是否存在關鍵詞集合中
+     *
      * @param strList
      * @param str
      * @return
@@ -49,14 +55,15 @@ public class FileUtil {
 
     /**
      * 刪除空白文件夾
+     *
      * @param file
      */
-    public static void deleteBlankDirectory(File file){
-        if(file.isDirectory()){
+    public static void deleteBlankDirectory(File file) {
+        if (file.isDirectory()) {
             File[] files = file.listFiles();
-            if(files.length == 0){
+            if (files.length == 0) {
                 file.delete();
-            }else{
+            } else {
                 for (File file1 : files) {
                     System.out.println(file.getName() + "is deleted..");
                     deleteBlankDirectory(file1);
@@ -66,42 +73,59 @@ public class FileUtil {
     }
 
     /**
-     *  修改文件名
+     * 修改文件名
      */
-    public static void modifyName(File file){
-        if(file.isDirectory()){
+    public static void modifyName(File file) {
+        if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (File f : files) {
                 modifyName(f);
             }
         }
-        if(file.getName().startsWith("课堂笔记")){
+        if (file.getName().startsWith("课堂笔记")) {
             System.out.println(file.getName());
-            file.renameTo(new File("./"+file.getParentFile().getName()+"-"+file.getName()));
+            file.renameTo(new File("./" + file.getParentFile().getName() + "-" + file.getName()));
         }
     }
 
     /**
      * 后缀删除文件
+     *
      * @param file
      * @param suffix
      */
-    public static void deleteFileBySuffix(File file,String suffix){
-        if(file.isDirectory()){
+    public static void deleteFileBySuffix(File file, String suffix) {
+        if (file.isDirectory()) {
             File[] files = file.listFiles();
-            if(files==null) return;
+            if (files == null) {
+                return;
+            }
             for (File f : files) {
-                deleteFileBySuffix(f,suffix);
+                deleteFileBySuffix(f, suffix);
             }
         }
-        if(file.getName().endsWith(suffix)){
+        if (file.getName().endsWith(suffix)) {
             System.out.println(file.getName());
             file.delete();
         }
     }
 
-    public static void main(String[] args) {
-        File file = new File("D:\\");
-        deleteFileBySuffix(file,"downloading");
+
+    public static void fileToMapFormat(String path) throws IOException {
+        File newFile = new File(path.substring(0, path.length() - 4) + "_newFile.txt");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(newFile));
+        String line = "";
+        String output = "";
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] s = line.split(" ");
+            output = "CITY_MAP.put(\"" + s[0] + "\" , \"" + s[2] + "\");\n\t";
+            bufferedWriter.write(output);
+            bufferedWriter.flush();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        fileToMapFormat("C:\\Users\\wangpeng\\Desktop\\city.txt");
     }
 }
