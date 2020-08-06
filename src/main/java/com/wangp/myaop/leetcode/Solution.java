@@ -1,11 +1,17 @@
 package com.wangp.myaop.leetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.system.ApplicationHome;
-import org.springframework.util.CollectionUtils;
-
-import java.util.*;
 
 /**
  * @Author wangp
@@ -63,6 +69,7 @@ public class Solution {
      */
     @Data
     public static class TreeNode {
+
         int val;
         TreeNode left;
         TreeNode right;
@@ -104,7 +111,6 @@ public class Solution {
                 depthStack.push(depth + 1);
             }
         }
-
 
         List<Integer> res = new ArrayList();
         for (int depth = 0; depth <= max_depth; depth++) {
@@ -150,8 +156,7 @@ public class Solution {
 
 
     /**
-     * 数组中的逆序对
-     * TODO 归并排序
+     * 数组中的逆序对 TODO 归并排序
      *
      * @param nums
      * @return
@@ -216,7 +221,9 @@ public class Solution {
         int r = size - 1;
         while (l <= r) {
             int mid = (l + r) / 2;
-            if (nums[mid] == target) return mid;
+            if (nums[mid] == target) {
+                return mid;
+            }
             if (nums[0] <= nums[mid]) {
                 if (nums[0] <= target && target < nums[mid]) {
                     r = mid - 1;
@@ -243,17 +250,21 @@ public class Solution {
     public int[] singleNumbers(int[] nums) {
         int[] ans = new int[2];
         int ret = 0;
-        for (int n : nums)
+        for (int n : nums) {
             ret ^= n;
+        }
         int div = 1;
-        while ((div & ret) == 0)
+        while ((div & ret) == 0) {
             div <<= 1;
+        }
         int a = 0, b = 0;
-        for (int n : nums)
-            if ((div & n) != 0)
+        for (int n : nums) {
+            if ((div & n) != 0) {
                 a ^= n;
-            else
+            } else {
                 b ^= n;
+            }
+        }
         ans[0] = a;
         ans[1] = b;
         return ans;
@@ -345,8 +356,7 @@ public class Solution {
     }
 
     /**
-     * 验证是否为二叉搜索树
-     * 方法一: 递归
+     * 验证是否为二叉搜索树 方法一: 递归
      *
      * @param node
      * @param lower
@@ -354,14 +364,24 @@ public class Solution {
      * @return
      */
     public boolean helper(TreeNode node, Integer lower, Integer upper) {
-        if (node == null) return true;
+        if (node == null) {
+            return true;
+        }
 
         int val = node.val;
-        if (lower != null && val <= lower) return false;
-        if (upper != null && val >= upper) return false;
+        if (lower != null && val <= lower) {
+            return false;
+        }
+        if (upper != null && val >= upper) {
+            return false;
+        }
 
-        if (!helper(node.right, val, upper)) return false;
-        if (!helper(node.left, lower, val)) return false;
+        if (!helper(node.right, val, upper)) {
+            return false;
+        }
+        if (!helper(node.left, lower, val)) {
+            return false;
+        }
         return true;
     }
 
@@ -370,8 +390,7 @@ public class Solution {
     }
 
     /**
-     * 验证是否为二叉搜索树
-     * 方法二：中序遍历
+     * 验证是否为二叉搜索树 方法二：中序遍历
      *
      * @param root
      * @return
@@ -385,7 +404,9 @@ public class Solution {
                 root = root.left;
             }
             root = stack.pop();
-            if (root.val <= inorder) return false;
+            if (root.val <= inorder) {
+                return false;
+            }
             inorder = root.val;
             root = root.right;
         }
@@ -441,8 +462,7 @@ public class Solution {
     }
 
     /**
-     * 最小栈 2
-     * 不用辅助栈
+     * 最小栈 2 不用辅助栈
      */
     static class MinStack2 {
 
@@ -660,6 +680,7 @@ public class Solution {
     }
 
     class CQueue {
+
         Stack<Integer> inStack;
         Stack<Integer> outStack;
 
@@ -768,8 +789,12 @@ public class Solution {
      * @return
      */
     public boolean hasPathSum(TreeNode root, int sum) {
-        if (root == null) return false;
-        if (root.left == null && root.right == null) return sum == root.val;
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return sum == root.val;
+        }
         return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 
@@ -782,8 +807,12 @@ public class Solution {
      * @return
      */
     public int[] divingBoard(int shorter, int longer, int k) {
-        if (k < 1) return new int[]{};
-        if (shorter == longer) return new int[]{shorter * k};
+        if (k < 1) {
+            return new int[]{};
+        }
+        if (shorter == longer) {
+            return new int[]{shorter * k};
+        }
         int[] lens = new int[k + 1];
         for (int i = 0; i <= k; i++) {
             lens[i] = shorter * (k - i) + longer * i;
@@ -862,7 +891,9 @@ public class Solution {
      * @return
      */
     public int minimumTotal(List<List<Integer>> triangle) {
-        if (triangle == null || triangle.size() == 0 || triangle.get(0) == null) return 0;
+        if (triangle == null || triangle.size() == 0 || triangle.get(0) == null) {
+            return 0;
+        }
         int[] dp = new int[triangle.size()];
         dp[0] = triangle.get(0).get(0);
         for (int i = 1; i < triangle.size(); i++) {
@@ -904,7 +935,9 @@ public class Solution {
         dp[1] = 1;
         dp[2] = 2;
         dp[3] = 4;
-        if (n < 4) return (int) dp[n];
+        if (n < 4) {
+            return (int) dp[n];
+        }
         for (int i = 4; i <= n; i++) {
             dp[i] = (dp[i - 1] + dp[i - 2] + dp[i - 3]) % 1000000007;
         }
@@ -918,8 +951,12 @@ public class Solution {
      * @return
      */
     public int massage(int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
-        if (nums.length == 2) return Math.max(nums[0], nums[1]);
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
@@ -940,13 +977,15 @@ public class Solution {
     }
 
     public int maxSubArray(int[] nums) {
-        if(nums == null || nums.length == 0) return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
         int max = dp[0];
         for (int i = 1; i < nums.length; i++) {
-            dp[i] = Math.max(nums[i],dp[i-1] + nums[i]);
-            max = Math.max(max,dp[i]);
+            dp[i] = Math.max(nums[i], dp[i - 1] + nums[i]);
+            max = Math.max(max, dp[i]);
         }
         return max;
     }
@@ -961,10 +1000,44 @@ public class Solution {
     public boolean isSubsequence(String s, String t) {
         int i = 0;
         for (char c : s.toCharArray()) {
-            while (i < t.length() && t.charAt(i) != c) i++;
+            while (i < t.length() && t.charAt(i) != c) {
+                i++;
+            }
             i++;
         }
-        return i <=t.length();
+        return i <= t.length();
+    }
+
+    /**
+     * @param words
+     * @return 已超时
+     */
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> palindromePair = new ArrayList<>();
+        for (int i = 0; i < words.length; i++) {
+            for (int j = 0; j < words.length; j++) {
+                if (i == j) {
+                    continue;
+                }
+                System.out.println("i=" + i + ",j=" + j);
+                String one = words[i];
+                String two = words[j];
+                if (canPair(one, two)) {
+                    palindromePair.add(Arrays.asList(i, j));
+                }
+            }
+        }
+        return palindromePair;
+    }
+
+    private boolean canPair(String one, String two) {
+        String str = one + two;
+        for (int i = 0; i < str.length() / 2; i++) {
+            if (str.charAt(i) != str.charAt(str.length() - i - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -987,7 +1060,7 @@ public class Solution {
 //        node3.setLeft(node6);
 //        node3.setRight(node7);
 //        node4.setRight(node8);
-        System.out.println(solution.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        System.out.println(solution.palindromePairs(new String[]{"abcd", "dcba", "lls", "s", "sssll"}));
     }
 
     public void preOrderTree(TreeNode root) {
