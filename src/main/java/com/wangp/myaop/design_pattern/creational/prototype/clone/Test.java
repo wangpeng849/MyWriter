@@ -24,7 +24,7 @@ public class Test {
         pig1.getBirthday().setTime(66666666666L);
         System.out.println(pig1);
         System.out.println(pig2);
-        
+
 
     }
 }
