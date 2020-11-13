@@ -1,5 +1,7 @@
 package com.wangp.myaop.leetcode.simple;
 
+import com.wangp.myaop.leetcode.ListNode;
+
 /**
  * <pre>
  * classname KthToLast
@@ -18,7 +20,6 @@ public class KthToLast {
         }
         while (node != null) {
             node = node.next;
-            ;
             head = head.next;
         }
         return head.val;
@@ -38,16 +39,4 @@ public class KthToLast {
 
         System.out.println(new KthToLast().kthToLast(node, 2));
     }
-
-
-    public static class ListNode {
-
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
 }

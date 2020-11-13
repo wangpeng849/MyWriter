@@ -1,5 +1,6 @@
 package com.wangp.myaop.leetcode.simple;
 
+import com.wangp.myaop.leetcode.ListNode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,17 +14,6 @@ import java.util.Map;
  * @date 2020/11/6 20:32
  **/
 public class GetIntersectionNode {
-
-    public static class ListNode {
-
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-            next = null;
-        }
-    }
 
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 //        ListNode head = headA;
