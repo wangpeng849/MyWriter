@@ -126,6 +126,43 @@ public class FileUtil {
     }
 
     public static void main(String[] args) throws IOException {
-        fileToMapFormat("C:\\Users\\wangpeng\\Desktop\\city.txt");
+        delX7syFile(new File("D:\\x7sy_clone"));
+    }
+
+    private static void delX7syFile(File file) {
+        for (File listFile : file.listFiles()) {
+            if (listFile.isDirectory()) {
+                for (File microFile : listFile.listFiles()) {
+                    if (microFile.getName().equals("target")) {
+                        delAllFile(microFile);
+                    }
+                    if (microFile.isDirectory()) {
+                        delX7syFile(microFile);
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 删除所有文件，包括文件夹本身
+     *
+     * @param dir 目录
+     */
+    private static void delAllFile(File dir) {
+        System.out.println("删除目录【" + dir + "】");
+        if (!dir.isDirectory()) {
+            dir.delete();
+            return;
+        }
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory()) {
+                delAllFile(file);
+            } else {
+                file.delete();
+            }
+        }
+        dir.delete();
     }
 }
