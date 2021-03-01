@@ -9,22 +9,24 @@ import java.util.concurrent.locks.ReentrantLock;
  * description
  * </pre>
  *
- * @author wangpeng
+ * @author wangpeng 拆分条件
  * @date 2021/3/1 14:57
  **/
-public class MyLockBlockQueue extends MyQueue {
+public class MyConditionLockBlockQueue extends MyQueue {
 
     /*** 显示锁 */
     private final ReentrantLock lock = new ReentrantLock();
-    /*** 锁条件变量 */
-    private final Condition condition = lock.newCondition();
+    /*** 队列未满条件变量 */
+    private final Condition notFull = lock.newCondition();
+    /*** 队列非空条件变量 */
+    private final Condition notEmpty = lock.newCondition();
 
     /**
      * 初始化
      *
      * @param capacity
      */
-    public MyLockBlockQueue(int capacity) {
+    public MyConditionLockBlockQueue(int capacity) {
         this(capacity, false);
     }
 
@@ -33,7 +35,7 @@ public class MyLockBlockQueue extends MyQueue {
      *
      * @param capacity
      */
-    public MyLockBlockQueue(int capacity, boolean isPrint) {
+    public MyConditionLockBlockQueue(int capacity, boolean isPrint) {
         super(capacity, isPrint);
     }
 
@@ -51,11 +53,11 @@ public class MyLockBlockQueue extends MyQueue {
             // 队列已满时进入休眠
             // 使用与显式锁对应的条件变量
             while (size == items.length) {
-                condition.await();
+                notFull.await();
             }
             enqueue(e);
             // 唤醒休眠线程
-            condition.signalAll();
+            notEmpty.signal();
         } finally {
             lock.unlock();
         }
@@ -73,11 +75,11 @@ public class MyLockBlockQueue extends MyQueue {
             while (size == 0) {
                 // 队列为空时进入休眠
                 // 使用与显式锁对应的条件变量
-                condition.await();
+                notEmpty.await();
             }
             Object e = dequeue();
             // 唤醒其他线程
-            condition.signalAll();
+            notFull.signal();
             return e;
         } finally {
             lock.unlock();

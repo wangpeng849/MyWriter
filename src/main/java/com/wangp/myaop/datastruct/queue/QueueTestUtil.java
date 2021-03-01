@@ -30,11 +30,17 @@ public class QueueTestUtil {
     }
 
 
-    static void producerAndConsumer(MyQueue myBlockQueue) throws Exception {
-        // 线程数
-        final int threads = 2;
-        // 每个线程执行10次
-        final int times = 10;
+    static void producerAndConsumer(MyQueue myBlockQueue) throws InterruptedException {
+        // 默认为 线程2，循环10次
+        producerAndConsumerWithParam(myBlockQueue, 2, 10);
+    }
+
+    /**
+     * @param myBlockQueue 队列
+     * @param threads      线程数
+     * @param times        每个线程执行次数
+     */
+    static void producerAndConsumerWithParam(MyQueue myBlockQueue, int threads, int times) throws InterruptedException {
         // 线程列表
         List<Thread> threadList = new ArrayList<>();
         // 开始时间
