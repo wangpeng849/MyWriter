@@ -13,8 +13,8 @@ public class Code {
 
 
     public static void main(String[] args) {
-        String source = "     c";
-        String str = " c";
+        String source = "1112345";
+        String str = "45";
         System.out.println(indexOf(source, str));
         System.out.println(source.indexOf(str));
     }
@@ -23,20 +23,19 @@ public class Code {
         if (source == null || str == null || source.length() == 0 || str.length() == 0) {
             return -1;
         }
-        int index = 0;
-        int start = -1;
-        for (int i = 0; i < source.length(); i++) {
-            if (source.charAt(i) == str.charAt(index)) {
-                if (start == -1) {
-                    start = i;
-                }
-                index++;
-                if (index == str.length()) {
-                    return start;
-                }
-            } else {
-                index = 0;
-                start = -1;
+        char first = str.charAt(0);
+        int max = source.length() - str.length();
+        for (int i = 0; i <= max; i++) {
+            if (source.charAt(i) != first) {
+                continue;
+            }
+            int j = i + 1;
+            int end = str.length() + j - 1;
+            for (int k = 1; j < end && source.charAt(j) == str.charAt(k); j++, k++) {
+
+            }
+            if (j == end) {
+                return i;
             }
         }
         return -1;
